@@ -3,10 +3,10 @@
     <div class="container">
       <h2>Login</h2>
       <div class="form">
-        <form  action="http://localhost:8081/do" method="post">
+        <form  @submit.prevent="submit">
           <div class="box">
             <label for="name">账号:</label>
-            <input v-model="name" type="text" @input="checkName" id="username" name="username">
+            <input v-model="name" type="text" @input="checkName" id="name" name="name">
             <p class="message">请输入5-16位账号</p>
           </div>
           <div class="box">
@@ -40,19 +40,21 @@ export default {
   },
 
   methods: {
-    login() {
-      this.$http.post('http//localhost:8081/do', {
-        username: this.username,
+    submit() {
+      this.$http.post('/do', {
+        name: this.name,
         password: this.password
       }).then(response => {
         if (response.status === 200) {
+          // 登录成功，跳转到 /userindex 页面 主页暂时没写 就先跳转到这个页面
           this.$router.push('/userindex')
         } else {
-          this.error = '登录失败，请检查账号和密码是否正确。'
+          // 登录失败，打印错误信息到控制台
+          console.error(response.data)
         }
       }).catch(error => {
+        // 处理错误信息
         console.error(error)
-        this.error = '登录出现错误，请稍后重试。'
       })
     },
     checkPassword(event) {
