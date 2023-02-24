@@ -41,7 +41,7 @@ export default {
 
   methods: {
     login() {
-      axios.post('/do', {
+      this.$http.post('/do', {
         name: this.name,
         password: this.password
       }).then(response => {
@@ -55,23 +55,11 @@ export default {
         this.error = '登录出现错误，请稍后重试。'
       })
     },
-    //下面为才用api.js中的假数据来验证是否能正确跳转
-    // async login() {
-    //   const res = await fakeLogin(this.name, this.password)
-    //   if (res.code === 200) {
-    //     // 登录成功，跳转到首页
-    //     this.$router.push('/home')
-    //   } else {
-    //     // 登录失败，给出错误提示
-    //     alert(res.message)
-    //   }
-    // },
     checkPassword(event) {
       var msg = document.querySelector('.message2');
       const input = event.target.value;
       const pattern = /^\w{8,16}$/;
       if (!pattern.test(input)) {
-        console.error("密码格式不正确");
         msg.className = 'message2 wrong';
       }
       else {
@@ -83,7 +71,6 @@ export default {
       const input = event.target.value;
       const pattern = /^\w{5,16}$/;
       if (!pattern.test(input)) {
-        console.error("账号格式不正确");
         msg.className = 'message wrong';
       }
       else {
