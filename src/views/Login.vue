@@ -3,10 +3,10 @@
     <div class="container">
       <h2>Login</h2>
       <div class="form">
-        <form @submit.prevent="login" action="/do" method="post">
+        <form  action="http://localhost:8081/do" method="post">
           <div class="box">
             <label for="name">账号:</label>
-            <input v-model="name" type="text" @input="checkName" id="name" name="name">
+            <input v-model="name" type="text" @input="checkName" id="username" name="username">
             <p class="message">请输入5-16位账号</p>
           </div>
           <div class="box">
@@ -41,8 +41,8 @@ export default {
 
   methods: {
     login() {
-      this.$http.post('/do', {
-        name: this.name,
+      this.$http.post('http//localhost:8081/do', {
+        username: this.username,
         password: this.password
       }).then(response => {
         if (response.status === 200) {
