@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import userIdex from "@/views/userIdex.vue";
+import UserDetil from '@/views/UserDetil';
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,11 @@ const routes = [
     path: '/userindex',
     name: 'userindex',
     component: userIdex
+  },
+  {
+    path: '/userdetil',
+    name: 'userdetil',
+    component: UserDetil
   }
 ]
 
