@@ -304,50 +304,29 @@
 				return isJPG && isLt4M;
 			},
 			//提交表单内容
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						//需要提交的数据
-						// let userdetil = {
-						// 	image:this.ruleForm.image,
-						// 	username: this.ruleForm.username,
-						// 	phone: this.ruleForm.phone,
-						// 	email: this.ruleForm.email,
-						// 	code: String(this.ruleForm.language) ,
-						// 	job: String(this.ruleForm.job[1])
-						// }
-						//数据提交请求的接口路径
-						// let url = '/user/firstSaveUserDetail'
-						// axios.get(url,userdetil).then(function (msg){
-						// 	this.$message("用户信息保存成功")
-						// 	setTimeout(() => window.location.href="/index", 200);
-						// }).catch(function (err){
-						// 	alert(err)
-						// })
-						axios({
-							//请求方式
-							method:'get',
-							//后端接口路径
-							url:'/user/firstSaveUserDetail',
-							params:{
-								image:this.ruleForm.image,
-								username: this.ruleForm.username,
-								phone: this.ruleForm.phone,
-								email: this.ruleForm.email,
-								code: String(this.ruleForm.language) ,
-								job: String(this.ruleForm.job[1])
-							},
-						}).then((response) =>{
-							this.$message('ok!');
-						}).catch((error)=>{
-							console.log(this.data)
-						});
-					} else {
-						alert('error submit!!');
-						return false;
-					}
-				});
-			},
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$http.get('/user/firstSaveUserDetail', {
+              params: {
+                image: this.ruleForm.image,
+                username: this.ruleForm.username,
+                phone: this.ruleForm.phone,
+                email: this.ruleForm.email,
+                code: String(this.ruleForm.language),
+                job: String(this.ruleForm.job[1])
+              }
+            }).then((response) => {
+              this.$message('ok!');
+            }).catch((error) => {
+              console.log(error);
+            });
+          } else {
+            alert('error submit!!');
+            return false;
+          }
+        });
+      },
 		}
         }
 </script>
