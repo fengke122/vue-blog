@@ -149,7 +149,7 @@
 </template>
 <script>
 export default {
-  name: "userIdex",
+  name: "userIndex",
   data () {
     return {
       size: "",
