@@ -378,17 +378,19 @@
 
 
 .el-form{
-    background-color: rgba(99, 71, 71, 0.574);
     border: 1px seashell solid;
-    border-radius: 13px;
-    box-shadow:  1px 1px 2px #8bc0c1,
-    -1px -1px 2px #97b1ba;
+    border-radius: 3px;
     height: 85%;
     width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-right: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
 }
 
 
