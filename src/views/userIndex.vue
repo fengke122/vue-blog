@@ -146,10 +146,11 @@
         </div>
       </div>
     </div>
+
 </template>
 <script>
 export default {
-  name: "userIdex",
+  name: "userIndex",
   data () {
     return {
       size: "",
@@ -169,9 +170,11 @@ export default {
 </script>
 <style scoped>
 
-
-
-
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .el-header {
   /*background: url("../img/bg2.png") no-repeat;*/
