@@ -5,6 +5,8 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import userIndex from "@/views/userIndex.vue";
 import UserDetil from '@/views/UserDetil';
+import Test from "@/views/Test.vue";
+import Changepsw from "@/views/Changepsw.vue";
 
 Vue.use(VueRouter)
 
@@ -37,6 +39,16 @@ const routes = [
     path: '/userdetil',
     name: 'userdetil',
     component: UserDetil
+  },
+  {
+    path: "/test",
+    nmae: 'test',
+    component: Test
+  },
+  {
+    path: '/security',
+    name: 'security',
+    component: Changepsw
   }
 ]
 

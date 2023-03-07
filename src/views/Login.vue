@@ -108,18 +108,6 @@ export default {
 
 
 
-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: url("~@/assets/img/bg6.jpg") no-repeat;
-  background-size: cover;
-
-}
 
 .container {
   display: flex;
