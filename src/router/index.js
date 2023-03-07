@@ -49,7 +49,7 @@ const routes = [
     path: '/security',
     name: 'security',
     component: Changepsw
-  }
+  },
 ]
 
 const router = new VueRouter({

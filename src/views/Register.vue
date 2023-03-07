@@ -20,7 +20,10 @@
                   size="small"></el-input>
             </div>
           </el-form-item>
-          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>
+              <div>
+                <img :src="captchaUrl" @click="refreshCaptcha" alt="验证码">
+              </div>
+<!--          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>-->
           <el-form-item class="btn">
             <el-button
                 size="small"
@@ -66,6 +69,8 @@ export default {
         password:'',
         checkPass:'',
         code:'',
+        captchaUrl: 'common/kaptcha', // 验证码图片的 URL
+        captchaData: null // 保存验证码图片数据的变量
       },
       rules: {
         //校验数据
@@ -97,8 +102,17 @@ export default {
     };
   },
   methods: {
-    updateVerifyCode() {
-      this.vcUrl = '/api/kaptcha?time='+new Date();
+    // 刷新验证码
+    refreshCaptcha() {
+      // 向服务器端发送获取验证码数据的请求
+      this.$http.get('common/verifiyCode').then(response => {
+        // 保存获取到的验证码数据
+        this.captchaData = response.data;
+        // 更新验证码图片的 URL
+        this.captchaUrl = 'data:image/jpeg;base64,' + this.captchaData;
+      }).catch(error => {
+        console.log(error);
+      });
     },
     async handlerRegister() {
       try {
@@ -131,6 +145,8 @@ export default {
 }
 </script>
 <style scoped>
+
+
 
 
 .el-form-item {

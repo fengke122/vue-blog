@@ -1,65 +1,64 @@
 <template>
   <div>
-    <el-upload
-        class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
+    <canvas ref="canvas" :width="captchaWidth" :height="captchaHeight"></canvas>
+    <img :src="captchaImage" alt="验证码" @click="refreshCaptcha">
   </div>
 </template>
+
 <script>
 export default {
-  name: "Test",
   data() {
     return {
-      imageUrl: ''
-    };
+      captchaWidth: 100, // 图形验证码的宽度
+      captchaHeight: 40, // 图形验证码的高度
+      captchaCode: '', // 验证码字符串
+      captchaImage: null // 验证码图片的 Base64 编码
+    }
+  },
+  mounted() {
+    this.generateCaptcha()
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+    // 生成随机的图形验证码
+    generateCaptcha() {
+      const canvas = this.$refs.canvas
+      const ctx = canvas.getContext('2d')
+      this.captchaCode = this.randomCode()
 
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+      // 绘制图形验证码
+      ctx.fillStyle = '#f2f2f2'
+      ctx.fillRect(0, 0, this.captchaWidth, this.captchaHeight)
+      ctx.font = 'bold 30px sans-serif'
+      ctx.textBaseline = 'middle'
+      ctx.textAlign = 'center'
+      ctx.fillStyle = '#333'
+      ctx.fillText(this.captchaCode, this.captchaWidth / 2, this.captchaHeight / 2)
+
+      // 将 Canvas 转换为 Base64 格式
+      this.captchaImage = canvas.toDataURL()
+    },
+    // 生成随机的验证码字符
+    randomCode() {
+      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+      let code = ''
+      for (let i = 0; i < 4; i++) {
+        const index = Math.floor(Math.random() * chars.length)
+        code += chars[index]
       }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
+      return code
+    },
+    // 刷新验证码
+    refreshCaptcha() {
+      this.generateCaptcha()
     }
   }
 }
 </script>
+
 <style scoped>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
+img {
   display: block;
+  margin-top: 10px;
+  cursor: pointer;
 }
 </style>

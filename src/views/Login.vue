@@ -6,7 +6,7 @@
         <form  @submit.prevent="submit">
           <div class="box">
             <label for="name">账号:</label>
-            <input v-model="name" type="text" @input="checkName" id="name" name="name">
+            <input v-model="username" type="text" @input="checkName" id="username" name="username">
             <p class="message">请输入5-16位账号</p>
           </div>
           <div class="box">
@@ -33,7 +33,7 @@ export default {
   name: "Login",
   data() {
     return {
-      name:'',
+      username:'',
       password:'',
 
     };
@@ -43,7 +43,7 @@ export default {
 
     submit() {
       const formData = new FormData();
-      formData.append('name', this.name);
+      formData.append('username', this.username);
       formData.append('password', this.password);
 
       this.$http.post('/do', formData, {
@@ -51,7 +51,8 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(response => {
-        if (response.status === 200) {
+        console.log(response.data.code);
+        if (response.data.code === 200) {
           // 登录成功，跳转到 /userindex 页面
           this.$router.push('/userindex')
         } else {
@@ -84,7 +85,7 @@ export default {
       else {
         msg.className = 'message right';
       }
-    }
+    },
   },
 }
 

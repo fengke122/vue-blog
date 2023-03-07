@@ -17,9 +17,10 @@ new Vue({ //vue全局实例 不建议使用   不用修改
 
 // 创建一个 axios 实例
 const instance = axios.create({
-  baseURL: 'http://localhost:8081',
+  baseURL: 'http://192.168.43.138:8081',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': 'http://192.168.43.138:8081',
   }
 });
 
