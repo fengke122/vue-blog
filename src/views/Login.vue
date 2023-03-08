@@ -40,13 +40,19 @@ export default {
   },
 
   methods: {
+
     submit() {
-      this.$http.post('/do', {
-        name: this.name,
-        password: this.password
+      const formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('password', this.password);
+
+      this.$http.post('/do', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }).then(response => {
         if (response.status === 200) {
-          // 登录成功，跳转到 /userindex 页面 主页暂时没写 就先跳转到这个页面
+          // 登录成功，跳转到 /userindex 页面
           this.$router.push('/userindex')
         } else {
           // 登录失败，打印错误信息到控制台
