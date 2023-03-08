@@ -18,7 +18,6 @@
 
             <li v-for="item in BlogsList" :key="item.bid" class="item" @click="open(item.context, item.bid)">
                 <div class="content">
-
                     <h5 class="title">{{ item.title }}</h5>
                     <p class="context">{{ item.context }}</p>
                     <div class="meta">
@@ -48,12 +47,12 @@ export default {
     data() {
         return {
             navs:['全部博客','待审核','审核通过','审核未通过'],
-            active: "0",
-            status: 0,
-            bid: 0,
+            active: "0", 
+            status: 0, //博客状态
+            bid: 0, //博客id
             text: '', //博客详情
             dialogVisible: false, //博客详情页
-            total: 1,
+            total: 1, 
             currentPage: 1,
             BlogsList: []
         }
@@ -63,8 +62,8 @@ export default {
         // this.getBlogsList(1)
     },
     methods: {
-        //改变状态
-        //发送：博客id：bid、当前状态：（0所有博客 1代审核 2通过审核 3未通过）
+        //博客审核
+        //发送：博客id：bid  当前状态：isalive（0所有博客 1代审核 2通过审核 3未通过）
         //得到：status
         check(bid,status){
             this.$http({
@@ -72,29 +71,47 @@ export default {
                 url:'http://localhost:7788/check',
                 params:{
                     bid:bid,
-                    status:status
+                    isalive:status
                 }
             }).then(res=>{
                 if(res.data.status===200){
                     this.assignment(this.status);
                 }  
-                
             }).catch(err=>{
                 console.log(err.msg);
             })
-
+        },
+        //发送：状态isalive、页码：page
+        //得到：博客信息列表（包括作者名）、数据总大小
+        assignment(status) {
+            this.status = status;
+            this.$http({
+                method: 'get',
+                url: 'http://localhost:7788/assignment',
+                params: {
+                    page: this.currentPage,
+                    isalive: status
+                }
+            }).then(res => {
+                this.BlogsList = res.data.data;
+                console.log(res.data.data);
+                this.total = res.data.total;
+            }).catch(err => {
+                console.log(err);
+            })
         },
 
+        //通过审核
         handlePass(bid) {
             this.$confirm('确认通过审核？')
                 .then(_ => {
                     this.check(bid,1);
                     console.log("Ss", bid);
                     this.dialogVisible = false
-
                 })
                 .catch(_ => { });
         },
+        //不通过审核
         handleFail(bid) {
             this.$confirm('确认不通过审核？')
                 .then(_ => {
@@ -118,50 +135,12 @@ export default {
             this.assignment(this.status)
         },
 
+        //博客状态分类
         handleClassify(status) {
             this.active= status;
             this.currentPage = 1;
             this.assignment(status);
         },
-
-        //发送：状态isalive、页码：page
-        //得到：博客信息列表（包括作者名）、数据总大小
-        assignment(status) {
-            this.status = status;
-            this.$http({
-                method: 'get',
-                url: 'http://localhost:7788/assignment',
-                params: {
-                    page: this.currentPage,
-                    isalive: status
-                }
-            }).then(res => {
-                this.BlogsList = res.data.data;
-                console.log(res.data.data);
-                this.total = res.data.total;
-            }).catch(err => {
-                console.log(err);
-            })
-
-        },
-
-        //获取博客列表
-        // getBlogsList(){
-        //     this.$http({
-        //         method:'get',
-        //         url:'http://localhost:7788/getBlogs',
-        //         params:{
-        //             page:this.currentPage
-        //         }
-        //     }).then(res=>{
-        //         this.BlogsList = res.data.data;
-        //         console.log(res.data.data);
-        //         this.total = res.data.total;
-        //     }).catch(err=>{
-        //         console.log(err);
-        //     })
-        // },
-
 
     },
 }

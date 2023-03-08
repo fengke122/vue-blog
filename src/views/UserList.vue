@@ -1,7 +1,6 @@
 <template>
 
     <div id="UserList">
-        <!-- 分页加载 :data="tableData.slice((currentPage - 1) * 10, currentPage * 10)" -->
         <el-table class="usertable" cell-class-name="cell-center" header-cell-class-name="header-css"
             @sort-change="sortChange" :data="tableData" 
             style="width: 100%">
@@ -66,13 +65,12 @@ export default {
         }
     },
     mounted() {
-        // this.searchName();
         this.getUserList(1);
     },
     methods: {
         //是否封禁
         //发送： 用户id  用户应当修改的状态isalive
-        // 得到 status
+        // 得到 data.code===200?
         ifBan(id,isalive){
             this.$http({
                     method: 'get',
@@ -82,7 +80,7 @@ export default {
                         isalive:isalive
                     }
                 }).then(res => {
-                    if (res.data.status === 200) {
+                    if (res.data.code === 200) {
                         this.getUserList(this.currentPage);
                         this.$message({
                             type: 'success',
@@ -95,6 +93,49 @@ export default {
                         message: error
                     });
                 })
+        },
+
+         //获取用户列表
+        // 发送：页码page 搜索用户名name
+        // 得到：该页数据：data、数据总条数：total
+        getUserList(page){
+            this.$http({
+                method:'get',
+                url:'http://localhost:7788/search',
+                params:{
+                    page :page, //页码
+                    name:this.search, //搜索关键词
+                }
+            }).then(res=>{
+                this.tableData = res.data.data;
+                this.total = res.data.total
+                console.log("查询数据----",res.data.data);
+            }).catch(error =>{
+                console.log(error);
+            })
+        },
+        //按时间排序
+        // 发送：搜索用户名：name、排序方式：order（ascending，descending）、当前页码：page
+        // 得到：该页数据data
+        sortChange({order}){
+            if(order===null){
+                this.getUserList(this.currentPage);
+            }
+            else{
+                this.$http({
+                method:'get',
+                url:'http://localhost:7788/orderUsers',
+                params:{
+                    name:this.search,
+                    order:order,
+                    page:this.currentPage
+                }
+            }).then(res=>{
+                this.tableData = res.data.data;
+            }).catch(error =>{
+                console.log(error);
+            })
+            }
         },
 
         // 取消封禁
@@ -138,66 +179,12 @@ export default {
             this.getUserList(val);
         },
         
-        //从后端获取  （总条数 用户列表）
-        // getUserList(page) {
-        //     this.$http({
-        //         method: 'get',
-        //         url: 'http://localhost:7788/getlist',
-        //         params:{
-        //             //向后端传递页面
-        //             page:page
-        //         }
-        //     }).then(res => {
-        //         //获取 该页数据 总条数
-        //         this.tableData = res.data.data
-        //         this.total = res.data.total
-        //     }).catch(error => {
-        //         console.log(error);
-        //     })
-        // },
-        
         // 搜索用户
         searchName(){
             this.currentPage =1
             this.getUserList(1)
         },
-        //获取用户列表
-        // 发送：页码page 关键词search
-        // 得到：该页数据：data、数据总条数：total
-        getUserList(page){
-            this.$http({
-                method:'get',
-                url:'http://localhost:7788/search',
-                params:{
-                    page :page, //页码
-                    search:this.search, //搜索关键词
-                }
-            }).then(res=>{
-                this.tableData = res.data.data;
-                this.total = res.data.total
-                console.log("查询数据----",res.data.data);
-            }).catch(error =>{
-                console.log(error);
-            })
-        },
-        //按时间排序
-        // 发送：搜索关键词：search、排序方式：order（ascending，descending,null）、当前页码：page
-        // 得到：该页数据
-        sortChange({order}){
-            this.$http({
-                method:'get',
-                url:'http://localhost:7788/orderUsers',
-                params:{
-                    search:this.search,
-                    order:order,
-                    page:this.currentPage
-                }
-            }).then(res=>{
-                this.tableData = res.data.data;
-            }).catch(error =>{
-                console.log(error);
-            })
-        }
+       
 }}
 
 
