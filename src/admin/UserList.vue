@@ -1,12 +1,11 @@
 <template>
-
     <div id="UserList">
         <el-table class="usertable" cell-class-name="cell-center" header-cell-class-name="header-css"
             @sort-change="sortChange" :data="tableData" 
             style="width: 100%">
             <el-table-column label="用户编号" prop="id" width="100px">
             </el-table-column>
-            <el-table-column label="注册日期" prop="addtime" sortable="custom">
+            <el-table-column label="注册日期" prop="addtime" sortable="custom" >
             </el-table-column>
             <el-table-column label="用户名">
                 <template slot-scope="scope">
@@ -29,7 +28,6 @@
                         封禁
                     </el-tag>
                 </template> 
-                
             </el-table-column>
             <el-table-column align="right">
                 <template slot="header" slot-scope="scope">
@@ -62,6 +60,7 @@ export default {
             tableData: [], //表格数据
             search: '', //搜索关键词
             currentPage:1, //当前页码
+            currentOrder:'',//当前排序方式
         }
     },
     mounted() {
@@ -96,46 +95,30 @@ export default {
         },
 
          //获取用户列表
-        // 发送：页码page 搜索用户名name
+        // 发送：页码page 搜索用户名name 排序方式order（ascending，descending null）
         // 得到：该页数据：data、数据总条数：total
         getUserList(page){
             this.$http({
                 method:'get',
-                url:'http://localhost:7788/search',
+                url:'http://localhost:7788/orderUsers',
                 params:{
-                    page :page, //页码
-                    name:this.search, //搜索关键词
+                    name:this.search, //搜索关键词name
+                    order:this.currentOrder, //排序方式
+                    num:page, //当前页码
                 }
             }).then(res=>{
                 this.tableData = res.data.data;
-                this.total = res.data.total
-                console.log("查询数据----",res.data.data);
+                this.total = res.data.total;
             }).catch(error =>{
                 console.log(error);
             })
         },
-        //按时间排序
-        // 发送：搜索用户名：name、排序方式：order（ascending，descending）、当前页码：page
-        // 得到：该页数据data
+       
+        // 排序发生变化
         sortChange({order}){
-            if(order===null){
-                this.getUserList(this.currentPage);
-            }
-            else{
-                this.$http({
-                method:'get',
-                url:'http://localhost:7788/orderUsers',
-                params:{
-                    name:this.search,
-                    order:order,
-                    page:this.currentPage
-                }
-            }).then(res=>{
-                this.tableData = res.data.data;
-            }).catch(error =>{
-                console.log(error);
-            })
-            }
+                this.currentOrder = {order}.order;
+                this.currentPage=1;
+                this.getUserList(1);
         },
 
         // 取消封禁
@@ -146,8 +129,7 @@ export default {
                 type: 'warning',
                 center: true
             }).then(() => {
-                const num =1;
-                 this.ifBan(row.id,num)
+                 this.ifBan(row.id,1)
             }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -163,8 +145,7 @@ export default {
                 type: 'warning',
                 center: true
             }).then(() => {
-                const num =0;
-                 this.ifBan(row.id,num)
+                 this.ifBan(row.id,0)
             }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -176,7 +157,7 @@ export default {
         //页码跳转
         currentChange(val) {
            this.currentPage = val;
-            this.getUserList(val);
+           this.getUserList(val);
         },
         
         // 搜索用户

@@ -10,25 +10,27 @@
         <el-dialog title="内容详情" :visible.sync="dialogVisible" width="60%">
             <span class="context">{{ text }}</span>
             <span slot="footer" class="dialog-footer">
-                <el-button type="success el-icon-check" :v-model="bid" @click="handlePass(bid)">通过审核</el-button>
-                <el-button type="danger el-icon-close" :v-model="bid" @click="handleFail(bid)">不通过</el-button>
+                <el-button type="success el-icon-check" :v-model="bid" @click="handlePass(bid)" v-if="isalive===2 || isalive===0">通过审核</el-button>
+                <el-button type="danger el-icon-close" :v-model="bid" @click="handleFail(bid)" v-if="isalive===1 || isalive===0">不通过</el-button>
             </span>
         </el-dialog>
         <ul class="list">
-
-            <li v-for="item in BlogsList" :key="item.bid" class="item" @click="open(item.context, item.bid)">
+           
+            <li v-for="item in BlogsList" :key="item.bid" class="item" @click="open(item.context, item.bid, item.isalive)">
                 <div class="content">
                     <h5 class="title">{{ item.title }}</h5>
                     <p class="context">{{ item.context }}</p>
-                    <div class="meta">
-                        <span>作者：{{ item.name}}</span>
+                    <div class="meta" >
+                        <span>作者Id：{{ item.id}}</span>
                         <span v-if="item.addtime" class="time">发布时间：{{ item.addtime }}</span>
                         <span>赞：{{ item.hot }}</span>
                         <el-tag>#{{ item.tag }}</el-tag>
                         <el-tag>#{{ item.code }}</el-tag>
                     </div>
                 </div>
+            
             </li>
+    
         </ul>
         <div class="pagination">
             <Pagination :total="total" @CurrentChange="currentChange" :current-page="currentPage"></Pagination>
@@ -48,18 +50,17 @@ export default {
         return {
             navs:['全部博客','待审核','审核通过','审核未通过'],
             active: "0", 
-            status: 0, //博客状态
             bid: 0, //博客id
             text: '', //博客详情
+            isalive:0,  //打开的博客状态
             dialogVisible: false, //博客详情页
-            total: 1, 
-            currentPage: 1,
-            BlogsList: []
+            total: 1,  //数据总条数
+            currentPage: 1, //当前页码
+            BlogsList: [] //博客列表
         }
     },
     mounted() {
         this.assignment(0)
-        // this.getBlogsList(1)
     },
     methods: {
         //博客审核
@@ -74,7 +75,7 @@ export default {
                     isalive:status
                 }
             }).then(res=>{
-                if(res.data.status===200){
+                if(res.data.code===200){
                     this.assignment(this.status);
                 }  
             }).catch(err=>{
@@ -82,14 +83,14 @@ export default {
             })
         },
         //发送：状态isalive、页码：page
-        //得到：博客信息列表（包括作者名）、数据总大小
+        //得到：博客信息列表、数据总大小
         assignment(status) {
             this.status = status;
             this.$http({
                 method: 'get',
                 url: 'http://localhost:7788/assignment',
                 params: {
-                    page: this.currentPage,
+                    num: this.currentPage,
                     isalive: status
                 }
             }).then(res => {
@@ -106,26 +107,40 @@ export default {
             this.$confirm('确认通过审核？')
                 .then(_ => {
                     this.check(bid,1);
-                    console.log("Ss", bid);
                     this.dialogVisible = false
+                    this.$message({
+                            type: 'success',
+                            message: '已通过该博客!',
+                        });
                 })
-                .catch(_ => { });
-        },
+                .catch(()=>{this.$message({
+                    type: 'info',
+                    message: '通过失败!'
+                })
+            });
+            },
         //不通过审核
         handleFail(bid) {
             this.$confirm('确认不通过审核？')
                 .then(_ => {
-                    console.log("Ssnn", bid);
                     this.check(bid,2);
                     this.dialogVisible = false;
+                    this.$message({
+                            type: 'warning',
+                            message: '已封禁该博客!',
+                        });
+                }).catch(()=>{this.$message({
+                    type: 'info',
+                    message: '封禁失败!'
                 })
-                .catch(_ => { });
+            });
         },
         //打开博客内容
-        open(text, bid) {
+        open(text, bid, isalive) {
             this.text = text;
             this.bid = bid;
-            console.log(bid);
+            this.isalive = isalive;
+            console.log(bid,isalive);
             this.dialogVisible = true
         },
 
@@ -226,11 +241,9 @@ span.context {
     color: rgb(93, 154, 245);
 }
 
-.nav>li :hover{
-    background-color: #7976766d;
-}
 
 .dialog-footer>.el-button {
     padding: 7px 5px;
 }
+
 </style>
