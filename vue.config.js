@@ -7,8 +7,11 @@ module.exports = defineConfig({
     electronBuilder: {
       customFileProtocol: "./"
     }
-  }
+  },
+
 })
+
+
 
 
 
