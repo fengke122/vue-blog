@@ -5,9 +5,9 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import userIndex from "@/views/userIndex.vue";
 import UserDetil from '@/views/UserDetil';
-import ManagerIndex from '@/views/ManagerIndex';
-import UserList from '@/views/UserList';
-import BlogsList from '@/views/BlogsList';
+import ManagerIndex from '@/admin/ManagerIndex';
+import UserList from '@/admin/UserList';
+import BlogsList from '@/admin/BlogsList';
 
 Vue.use(VueRouter)
 
