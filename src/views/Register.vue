@@ -21,7 +21,7 @@
             </div>
           </el-form-item>
               <div>
-                <img :src="captchaUrl" @click="refreshCaptcha" alt="验证码">
+                <img :src="captchaUrl" width="80" height="30" class="img-code" @click="refreshCaptcha" alt="">
               </div>
 <!--          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>-->
           <el-form-item class="btn">
