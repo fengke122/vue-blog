@@ -21,7 +21,7 @@
             </div>
           </el-form-item>
               <div>
-                <img :src="captchaUrl" width="80" height="30" class="img-code" @click="refreshCaptcha" alt="">
+                <img :src="registerForm.captchaUrl" width="80" height="30" class="img-code" @click="refreshCaptcha" alt="">
               </div>
 <!--          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>-->
           <el-form-item class="btn">
@@ -63,13 +63,12 @@ export default {
       }
     };
     return {
-      vcUrl: '/api/kaptcha?time='+new Date(),
       registerForm: {
         name:'',
         password:'',
         checkPass:'',
         code:'',
-        captchaUrl: 'common/kaptcha', // 验证码图片的 URL
+        captchaUrl: '', // 验证码图片的 URL
         captchaData: null // 保存验证码图片数据的变量
       },
       rules: {
