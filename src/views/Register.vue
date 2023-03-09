@@ -20,19 +20,19 @@
                   size="small"></el-input>
             </div>
           </el-form-item>
-              <div>
-                <img :src="captchaUrl" width="80" height="30" class="img-code" @click="refreshCaptcha" alt="">
-              </div>
-<!--          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>-->
+          <div>
+            <img :src="registerForm.captchaUrl" width="80" height="30" class="img-code" @click="refreshCaptcha" alt="">
+          </div>
+          <!--          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>-->
           <el-form-item class="btn">
             <el-button
                 size="small"
                 @click="handlerRegister">注册</el-button>
             <router-link class="login-btn" to="/login">登录</router-link>
-<!--            <el-button-->
-<!--                class="login"-->
-<!--                size="small"-->
-<!--            >登录</el-button>-->
+            <!--            <el-button-->
+            <!--                class="login"-->
+            <!--                size="small"-->
+            <!--            >登录</el-button>-->
           </el-form-item>
         </el-form>
       </div>
@@ -63,13 +63,12 @@ export default {
       }
     };
     return {
-      vcUrl: '/api/kaptcha?time='+new Date(),
       registerForm: {
         name:'',
         password:'',
         checkPass:'',
         code:'',
-        captchaUrl: 'common/kaptcha', // 验证码图片的 URL
+        captchaUrl: '', // 验证码图片的 URL
         captchaData: null // 保存验证码图片数据的变量
       },
       rules: {
