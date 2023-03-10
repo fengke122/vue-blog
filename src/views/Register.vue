@@ -21,18 +21,13 @@
             </div>
           </el-form-item>
               <div>
-                <img :src="registerForm.captchaUrl" width="80" height="30" class="img-code" @click="refreshCaptcha" alt="">
+                <img :src="registerForm.captchaUrl" alt="验证码" @click="refreshCaptcha">
               </div>
-<!--          <div><img :src="vcUrl" alt="" width="80" height="30" class="img-code" @click="updateVerifyCode"></div>-->
           <el-form-item class="btn">
             <el-button
                 size="small"
-                @click="handlerRegister">注册</el-button>
+                @click="submitForm">注册</el-button>
             <router-link class="login-btn" to="/login">登录</router-link>
-<!--            <el-button-->
-<!--                class="login"-->
-<!--                size="small"-->
-<!--            >登录</el-button>-->
           </el-form-item>
         </el-form>
       </div>
@@ -68,8 +63,6 @@ export default {
         password:'',
         checkPass:'',
         code:'',
-        captchaUrl: '', // 验证码图片的 URL
-        captchaData: null // 保存验证码图片数据的变量
       },
       rules: {
         //校验数据
@@ -102,45 +95,52 @@ export default {
   },
   methods: {
     // 刷新验证码
-    refreshCaptcha() {
-      // 向服务器端发送获取验证码数据的请求
-      this.$http.get('common/verifiyCode').then(response => {
-        // 保存获取到的验证码数据
-        this.captchaData = response.data;
-        // 更新验证码图片的 URL
-        this.captchaUrl = 'data:image/jpeg;base64,' + this.captchaData;
-      }).catch(error => {
-        console.log(error);
-      });
-    },
-    async handlerRegister() {
+    async refreshCaptcha() {
       try {
-        const response = await axios({
-          //请求方式
-          method:'post',
-          //后端接口路径
-          url:'/common/register',
-          params:{
-            name:this.registerForm.name,
-            password:this.registerForm.password,
-            code:this.registerForm.code,
-          },
-        }).then((response) =>{
-          this.$message('ok!');
-        }).catch((error)=>{
-          console.log(this.data)
-        });
-        if (response.data.code !== 200) {
-          throw new Error('验证码不正确');
-          alert(response.data.msg);
-        }
-        // 处理成功请求
+        // 向后端请求验证码图片和地址
+        const response = await this.$http.get('/api/kaptcha', { responseType: 'blob' });
+        const data = response.data;
+        const url = URL.createObjectURL(data);
+
+        // 更新registerForm.captchaUrl属性
+        this.registerForm.captchaUrl = url;
+
+        // 向后端请求新的验证码值
+        const response2 = await this.$http.get('/common/verifiyCode');
+        this.registerForm.verifyCode = response2.data;
       } catch (error) {
-        // 错误处理
-        console.error(error.message);
+        console.error(error);
       }
     },
-  }
+    submitForm() {
+      this.$refs.registerForm.validate(async (valid) => {
+        if (valid) {
+          // 验证码验证
+          if (this.registerForm.code !== this.registerForm.verifyCode) {
+            this.$message.error('验证码输入错误');
+            this.refreshCaptcha(); // 刷新验证码
+            return;
+          }
+
+          // 提交表单
+          try {
+            await this.$http.post('/common/register', this.registerForm);
+            this.$message.success('注册成功');
+            this.$router.push('/login')
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+  },
+  mounted() {
+    // 获取验证码图片
+    this.refreshCaptcha();
+  },
 }
 </script>
 <style scoped>
