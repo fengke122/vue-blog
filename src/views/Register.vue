@@ -20,13 +20,13 @@
                   size="small"></el-input>
             </div>
           </el-form-item>
-              <div>
-                <img :src="registerForm.captchaUrl" alt="验证码" @click="refreshCaptcha">
-              </div>
+          <div @click="refreshCode()" class="code" style="cursor:pointer;">
+            <s-identify :identifyCode="identifyCode"></s-identify>
+          </div>
           <el-form-item class="btn">
             <el-button
                 size="small"
-                @click="submitForm">注册</el-button>
+                @click="submit">注册</el-button>
             <router-link class="login-btn" to="/login">登录</router-link>
           </el-form-item>
         </el-form>
@@ -35,8 +35,12 @@
   </div>
 </template>
 <script>
+import sIdentify from "@/common/sIdentify.vue";
 export default {
   name: "Register",
+  components: {
+    sIdentify
+  },
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -58,11 +62,12 @@ export default {
       }
     };
     return {
+      identifyCode: "",
+      identifyCodes: ['0','1','2','3','4','5','6','7','8','9','a','b','c','d'], //根据实际需求加入自己想要的字符
       registerForm: {
         name:'',
         password:'',
         checkPass:'',
-        code:'',
       },
       rules: {
         //校验数据
@@ -83,63 +88,56 @@ export default {
           { min: 8, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" },
           { validator: validatePass2, trigger: 'blur', required: true }
         ],
-        // phone: [
-        //     { required: true, message: "请输入手机号", trigger: "change" },
-        //     { min: 8, max: 16, message: "请输入11位手机号", trigger: "blur" },
-        // ],
         code    :[
           { required: true, message: "请输入验证码", trigger: "change" },
         ]
       },
     };
   },
+  mounted() {
+    this.refreshCode()
+  },
+  unmounted() {
+
+  },
   methods: {
-    // 刷新验证码
-    async refreshCaptcha() {
-      try {
-        // 向后端请求验证码图片和地址
-        const response = await this.$http.get('/api/kaptcha', { responseType: 'blob' });
-        const data = response.data;
-        const url = URL.createObjectURL(data);
-
-        // 更新registerForm.captchaUrl属性
-        this.registerForm.captchaUrl = url;
-
-        // 向后端请求新的验证码值
-        const response2 = await this.$http.get('/common/verifiyCode');
-        this.registerForm.verifyCode = response2.data;
-      } catch (error) {
-        console.error(error);
+    // 生成随机数
+    randomNum(min, max) {
+      max = max + 1
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    // 更新验证码
+    refreshCode() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
+      console.log('当前验证码:',this.identifyCode);
+    },
+    // 随机生成验证码字符串
+    makeCode(data, len) {
+      console.log('data, len:', data, len)
+      for (let i = 0; i < len; i++) {
+        this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length-1)]
       }
     },
-    submitForm() {
-      this.$refs.registerForm.validate(async (valid) => {
-        if (valid) {
-          // 验证码验证
-          if (this.registerForm.code !== this.registerForm.verifyCode) {
-            this.$message.error('验证码输入错误');
-            this.refreshCaptcha(); // 刷新验证码
-            return;
+    submit() {
+      if (this.identifyCode === this.registerForm.code) {
+        this.$refs.registerForm.validate(valid => {
+          if (valid) {
+            // 表单校验通过，提交表单
+            this.$http.post('/api/register', this.registerForm).then(response => {
+              // 处理响应数据
+            }).catch(error => {
+              // 处理错误
+            });
+          } else {
+            // 表单校验不通过
+            return false;
           }
-
-          // 提交表单
-          try {
-            await this.$http.post('/common/register', this.registerForm);
-            this.$message.success('注册成功');
-            this.$router.push('/login')
-          } catch (error) {
-            console.error(error);
-          }
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-  },
-  mounted() {
-    // 获取验证码图片
-    this.refreshCaptcha();
+        });
+        alert('验证码正确')
+      }
+      else alert('验证码错误')
+    }
   },
 }
 </script>
@@ -250,4 +248,16 @@ export default {
   background-color: rgb(234, 243, 254);
   color: #3f9dfe;
 }
+
+.btn {
+  margin-top: 20px;
+}
+
+.code {
+  cursor:pointer;
+  position: relative;
+  left: 90px;
+  top: 10px;
+}
+
 </style>
