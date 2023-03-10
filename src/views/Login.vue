@@ -51,16 +51,16 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(response => {
-        console.log(response.data.code);
-        if (response.data.code === 200) {
+        console.log(response.code);
+        if (response.code === 200) {
           // 登录成功，从后端返回的响应中获取 sessionid，并将其存储在 cookie 中
-          const sessionid = response.data.sessionid;
-          this.$cookie.set('sessionid', sessionid, 1); // 设置过期时间为 1 天
+          const SESSIONID = response.data;
+          this.$cookie.set('SESSIONID', SESSIONID, 1); // 设置过期时间为 1 天
           // 登录成功，跳转到 /userindex 页面
           this.$router.push('/userindex')
         } else {
           // 登录失败，打印错误信息到控制台
-          console.error(response.data)
+          console.error('登录失败')
         }
       }).catch(error => {
         // 处理错误信息
