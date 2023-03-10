@@ -5318,6 +5318,18 @@ vary@~1.1.2:
   resolved "https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+verify-base@0.x:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/verify-base/-/verify-base-0.1.1.tgz#1885b2c0a234bb1e6480942658444d1a90545753"
+  integrity sha512-13KlIUyQxsBSgA5xvRJrLExyG4slO+9Mn8Cm5Ojo5wG9KctzK2nt5esRHvtirgq6b/GGB1wKeb8gU7LET3KPZQ==
+  dependencies:
+    verify-identity-card "0.x"
+
+verify-identity-card@0.x:
+  version "0.0.2"
+  resolved "https://registry.npmmirror.com/verify-identity-card/-/verify-identity-card-0.0.2.tgz#d9281b85080fd6d0a95da5673ef8804aaeece28f"
+  integrity sha512-zTY+ZVqwN7MfebdZ8V1uURDrDa6yXDgSye4i4sIzN3MtZI2kXpAerl4uYVjUEBC9nTmkpc1Dq/gVxLWmEcq9+A==
+
 vue-cookie@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npmmirror.com/vue-cookie/-/vue-cookie-1.1.4.tgz#b8b46d112bda9f93a2f47017c2ed5282d2064fda"
@@ -5338,6 +5350,11 @@ vue-loader@^17.0.0:
     chalk "^4.1.0"
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
+
+vue-pop@0.x:
+  version "0.1.9"
+  resolved "https://registry.npmmirror.com/vue-pop/-/vue-pop-0.1.9.tgz#1f3cc912099143aedc2b40e5348e281490172fe2"
+  integrity sha512-bF6LDGBYrHXRGSnoD04DqIbvYa/zIzjNrr5l2rrkcgJf1rRcOR+LccDYv4nILKxr2OfEMgBJdmZhce3g7v3UMg==
 
 vue-router@^3.5.1:
   version "3.6.5"
@@ -5364,6 +5381,14 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npmmirror.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue-verify-pop@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.npmmirror.com/vue-verify-pop/-/vue-verify-pop-0.1.6.tgz#c96178f3577a790df034d123857c826ca30941fb"
+  integrity sha512-rX84Oem7n3m9P8G+z1LY8CL3vJFSWUpe0s3ZK3dwBSMGrPeQeqcN6k12mq3dSS3ng3glDYPRlzB5dWowg2aDGw==
+  dependencies:
+    verify-base "0.x"
+    vue-pop "0.x"
 
 vue@^2.6.14:
   version "2.7.14"
