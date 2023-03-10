@@ -4,7 +4,9 @@ import router from './router' //引入路由
 import ElementUI from 'element-ui';
 import axios from "axios";
 import 'element-ui/lib/theme-chalk/index.css';
+import cookie from 'vue-cookie'
 
+Vue.prototype.$cookie = cookie;  //配置时候prototype.$这里的名字自己定义不是固定是cookie
 Vue.use(ElementUI);
 Vue.prototype.$http = axios
 

@@ -53,6 +53,9 @@ export default {
       }).then(response => {
         console.log(response.data.code);
         if (response.data.code === 200) {
+          // 登录成功，从后端返回的响应中获取 sessionid，并将其存储在 cookie 中
+          const sessionid = response.data.sessionid;
+          this.$cookie.set('sessionid', sessionid, 1); // 设置过期时间为 1 天
           // 登录成功，跳转到 /userindex 页面
           this.$router.push('/userindex')
         } else {
