@@ -67,7 +67,7 @@ export default {
       registerForm: {
         name:'',
         password:'',
-        checkPass:'',
+        // checkPass:'',
       },
       rules: {
         //校验数据
@@ -124,7 +124,12 @@ export default {
         this.$refs.registerForm.validate(valid => {
           if (valid) {
             // 表单校验通过，提交表单
-            this.$http.post('/api/register', this.registerForm).then(response => {
+            this.$http.get('/common/register', {
+              params:{
+                username:this.registerForm.name,
+                password:this.registerForm.password,
+              }
+            }).then(response => {
               // 处理响应数据
             }).catch(error => {
               // 处理错误
