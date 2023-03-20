@@ -8,7 +8,6 @@ import cookie from 'vue-cookie'
 
 Vue.prototype.$cookie = cookie;  //配置时候prototype.$这里的名字自己定义不是固定是cookie
 Vue.use(ElementUI);
-Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
@@ -19,10 +18,10 @@ new Vue({ //vue全局实例 不建议使用   不用修改
 
 // 创建一个 axios 实例
 const instance = axios.create({
-  baseURL: 'http://yapi.smart-xwork.cn/mock/212517',
-  headers: {
+  baseURL: 'http://yapi.smart-xwork.cn/mock/212517', // 设置默认的基础地址
+  timeout: 5000, // 设置默认的超时时间
+  headers: { // 设置默认的请求头
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://yapi.smart-xwork.cn/mock/212517',
   }
 });
 
@@ -45,3 +44,6 @@ instance.interceptors.response.use(response => {
 
 // 将 axios 实例挂载到 Vue 原型上
 Vue.prototype.$http = instance;
+
+
+export default instance;

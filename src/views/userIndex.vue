@@ -162,7 +162,7 @@
               <div class="img-clip-wrap">
                 <el-upload
                     class="avatar-uploader photo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    action="/api/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -188,6 +188,7 @@
     </div>
 </template>
 <script>
+import instance from '@/main.js';
 export default {
   name: "userIndex",
   data () {
@@ -247,16 +248,16 @@ export default {
       return isJPG && isLt2M;
     },
     getUserInfo() {
-      this.$http.get('/api/users')
+      instance.get('/api/users')
           .then(response => {
-            this.userdetil.username = response.username
-            this.userdetil.phone = response.phone
-            this.userdetil.phone = response.email
-            this.userdetil.code = response.code
-            this.userdetil.job = response.job
-            this.userdetil.exp = response.exp
-            this.userdetil.level = response.level
-            this.userdetil.avatarUrl = response.image
+            this.userdetil.username = response.data.username
+            this.userdetil.phone = response.data.phone
+            this.userdetil.phone = response.data.email
+            this.userdetil.code = response.data.code
+            this.userdetil.job = response.data.job
+            this.userdetil.exp = response.data.exp
+            this.userdetil.level = response.data.level
+            this.userdetil.avatarUrl = response.data.image
             console.log(response.data) // 打印响应数据
           })
           .catch(err => {
@@ -265,7 +266,14 @@ export default {
     }
   },
   mounted() {
-    this.getUserInfo()
+    {
+      this.$nextTick(() => {
+        // 加上延时避免 mounted 方法比页面加载早执行 或者 对img进行块级化设置宽高进行 提前站位
+        setTimeout(() => {
+          this.getUserInfo()
+        }, 100)
+      })
+    }
   }
 }
 </script>
