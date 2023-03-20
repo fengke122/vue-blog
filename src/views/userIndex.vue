@@ -50,7 +50,7 @@
               <!-- 通过flag的值来判断显示哪一个下拉菜单 flag为true代表已经登录 false代表未登录-->
               <el-dropdown v-show="flag">
               <span class="el-dropdown-link">
-                <el-avatar :size="50" :src="avatarUrl" ></el-avatar>
+                <el-avatar :size="50" :src="userdetil.avatarUrl" ></el-avatar>
               </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item icon="el-icon-user-solid">个人中心</el-dropdown-item>
@@ -60,7 +60,7 @@
               </el-dropdown>
               <el-dropdown v-show="!flag">
               <span class="el-dropdown-link">
-                <el-avatar :size="50" :src="avatarUrl" ></el-avatar>
+                <el-avatar :size="50" :src="userdetil.avatarUrl" ></el-avatar>
               </span>
                 <el-dropdown-menu v-show="flag" slot="dropdown">
                   <el-dropdown-item icon="el-icon-user-login">点击登录</el-dropdown-item>
@@ -97,12 +97,12 @@
           <div class="user-home" v-show="showingContent === 'content1'">
             <div class="index-info">
               <div class="home-head">
-                <el-avatar :size="100" :src="avatarUrl" ></el-avatar>
+                <el-avatar :size="100" :src="userdetil.avatarUrl" ></el-avatar>
               </div>
               <div class="user-info">
                 <ul>
-                  <li><span v-model="username">{{username}}</span></li>
-                  <li><span v-model="level">{{level}}</span></li>
+                  <li><span v-model="userdetil.username">{{userdetil.username}}</span></li>
+                  <li><span v-model="userdetil.level">{{userdetil.level}}</span></li>
                 </ul>
               </div>
               <div class="user-set">
@@ -117,42 +117,42 @@
                     <i class="el-icon-user"></i>
                     用户名
                   </template>
-                  {{username}}
+                  {{userdetil.username}}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template slot="label">
                     <i class="el-icon-mobile-phone"></i>
                     手机号
                   </template>
-                  {{phone}}
+                  {{userdetil.phone}}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template slot="label">
                     <i class="el-icon-email"></i>
                     邮箱
                   </template>
-                  {{email}}
+                  {{userdetil.email}}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template slot="label">
                     <i class="el-icon-level"></i>
                     用户等级
                   </template>
-                  {{level}}
+                  {{userdetil.level}}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template slot="label">
                     <i class="el-icon-code"></i>
                     编程语言
                   </template>
-                  {{code}}
+                  {{userdetil.code}}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template slot="label">
                     <i class="el-icon-job"></i>
                     工作岗位
                   </template>
-                  {{job}}
+                  {{userdetil.job}}
                 </el-descriptions-item>
               </el-descriptions>
             </div>
@@ -171,7 +171,7 @@
                 </el-upload>
               </div>
               <div class="img-previeww-wrap">
-                <el-avatar :size="120" :src="avatarUrl" ></el-avatar>
+                <el-avatar :size="120" :src="userdetil.avatarUrl" ></el-avatar>
                 <span class="span-font">当前头像</span>
               </div>
             </div>
@@ -193,14 +193,16 @@ export default {
   data () {
     return {
       size: "",
-      username: "小明",
-      phone: "123456789",
-      email: "12345679@qq.com",
-      code: "Java",
-      job : "前端开发",
-      exp:   "100",
-      level: "用户",
-      avatarUrl: require('@/assets/img/tx.jpg'),
+      userdetil:{
+        username: "小明",
+        phone: "123456789",
+        email: "12345679@qq.com",
+        code: "Java",
+        job : "前端开发",
+        exp:   100,
+        level: 1,
+        avatarUrl: '',
+      },
       flag: true,
       showingContent: 'content1',
       uploadSuccess: false, // 用于标记是否已经上传成功 可以控制按钮是否启用
@@ -243,8 +245,27 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
       return isJPG && isLt2M;
+    },
+    getUserInfo() {
+      this.$http.get('/api/users')
+          .then(response => {
+            this.userdetil.username = response.username
+            this.userdetil.phone = response.phone
+            this.userdetil.phone = response.email
+            this.userdetil.code = response.code
+            this.userdetil.job = response.job
+            this.userdetil.exp = response.exp
+            this.userdetil.level = response.level
+            this.userdetil.avatarUrl = response.image
+            console.log(response.data) // 打印响应数据
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
     }
-
+  },
+  mounted() {
+    this.getUserInfo()
   }
 }
 </script>

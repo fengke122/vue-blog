@@ -48,7 +48,7 @@ export default {
       active: 1,
       email: '',
       code: '',
-      emailcode: '1234',
+      emailcode: "1234",
       isSending: false,
       remainingTime: 0,
       disableButton: false,
@@ -113,7 +113,8 @@ export default {
             // 请求成功后执行倒计时逻辑
             this.isSending = false;
             // 获取请求返回的验证码
-            this.emailcode = response.data.emailcode;
+            this.emailcode = response.msg;
+            console.log(response.data);
           })
           .catch(error => {
             // 请求失败处理逻辑

@@ -19,10 +19,10 @@ new Vue({ //vue全局实例 不建议使用   不用修改
 
 // 创建一个 axios 实例
 const instance = axios.create({
-  baseURL: 'http://localhost:8081',
+  baseURL: 'http://yapi.smart-xwork.cn/mock/212517',
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://localhost:8081',
+    'Access-Control-Allow-Origin': 'http://yapi.smart-xwork.cn/mock/212517',
   }
 });
 
