@@ -8,6 +8,10 @@ import UserDetil from '@/views/UserDetil';
 import ManagerIndex from '@/admin/ManagerIndex';
 import UserList from '@/admin/UserList';
 import BlogsList from '@/admin/BlogsList';
+import BlogsClassification from '@/admin/BlogsClassification';
+import BlogsTags from '@/admin/BlogsTags';
+import BlogsManage from '@/admin/BlogsManage';
+import BlogsPublish from '@/admin/BlogsPublish'
 
 Vue.use(VueRouter)
 
@@ -55,7 +59,27 @@ const routes = [
         path:'blogsList',
         name:'BlogsList',
         component:BlogsList
-      }
+      },
+      {
+        path:'blogsClassification',
+        name:'BlogsClassification',
+        component:BlogsClassification
+      },
+      {
+        path:'blogsTags',
+        name:'BlogsTags',
+        component:BlogsTags
+      },
+      {
+        path:'blogsManage',
+        name:'BlogsManage',
+        component:BlogsManage
+      },
+      {
+        path:'blogsPublish',
+        name:'BlogsPublish',
+        component:BlogsPublish
+      },
     ]
   }
 ]
