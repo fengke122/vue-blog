@@ -266,14 +266,14 @@ export default {
     }
   },
   mounted() {
-    {
+
       this.$nextTick(() => {
         // 加上延时避免 mounted 方法比页面加载早执行 或者 对img进行块级化设置宽高进行 提前站位
         setTimeout(() => {
           this.getUserInfo()
         }, 100)
       })
-    }
+
   }
 }
 </script>

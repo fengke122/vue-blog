@@ -7,6 +7,8 @@ import userIndex from "@/views/userIndex.vue";
 import UserDetil from '@/views/UserDetil';
 import Test from "@/views/Test.vue";
 import Changepsw from "@/views/Changepsw.vue";
+import MyBlog from "@/views/MyBlog.vue";
+import UserBlogEdit from "@/views/UserBlogEdit.vue";
 
 Vue.use(VueRouter)
 
@@ -50,6 +52,16 @@ const routes = [
     name: 'security',
     component: Changepsw
   },
+  {
+    path: '/myblog',
+    name: 'myblog',
+    component: MyBlog
+  },
+  {
+    path: '/userblogeditor',
+    name: 'userblogeditor',
+    component: UserBlogEdit
+  }
 ]
 
 const router = new VueRouter({
