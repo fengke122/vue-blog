@@ -8,9 +8,36 @@
       <el-form-item label="摘要" prop="description">
         <el-input type="textarea" v-model="ruleForm.description"></el-input>
       </el-form-item>
+      <el-form-item>
+        <el-select v-model="ruleForm.tagname" placeholder="请选择分类">
+          <el-option
+              v-for="item in ruleForm.options2"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
 
-      <el-form-item label="内容" prop="content">
-        <mavon-editor v-model="ruleForm.content"></mavon-editor>
+      <el-form-item>
+        <el-select v-model="ruleForm.classname" placeholder="请选择分类">
+          <el-option
+              v-for="item in ruleForm.options2"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="内容" prop="context">
+        <mavon-editor
+            v-model="ruleForm.context"
+            ref="md"
+            @imgAdd="imgAdd"
+            @imgDel="imgDel"
+            @save="saveMavon"
+        ></mavon-editor>
       </el-form-item>
 
       <el-form-item>
@@ -27,10 +54,41 @@ export default {
   data() {
     return {
       ruleForm: {
+        bid:'',
         id: '',
         title: '',
+        tagname: '',
+        classname: '',
         description: '',
-        content: ''
+        context: '',
+        hot: '',
+        isalive:'',
+        options: [{
+          value: '选项1',
+          label: 'Vue'
+        }, {
+          value: '选项2',
+          label: 'Git'
+        }, {
+          value: '选项3',
+          label: 'HTML5'
+        }, {
+          value: '选项4',
+          label: 'Java'
+        }, {
+          value: '选项5',
+          label: 'Webpack'
+        }],
+        options2: [{
+          value: '选项1',
+          label: 'Vue'
+        }, {
+          value: '选项2',
+          label: 'Java'
+        }, {
+          value: '选项3',
+          label: 'SpringBoot'
+        }]
       },
       rules: {
         title: [
@@ -40,19 +98,45 @@ export default {
         description: [
           {required: true, message: '请输入摘要', trigger: 'blur'}
         ],
-        content: [
+        context: [
           {trequired: true, message: '请输入内容', trigger: 'blur'}
         ]
       }
     };
   },
   methods: {
+    saveMavon(value,render){
+
+      console.log("this is render"+render);
+      console.log("this is value"+value);
+      console.log(this.$refs.md.d_render);
+    },
+    // 将图片上传到服务器，返回地址替换到md中
+    imgAdd(pos, $file) {
+      var _this = this
+      var formdata = new FormData();
+      formdata.append('image', $file);
+      this.$http.post("/api/upload",formdata,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((response) => {
+        // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+        if (response.status === 200) {
+          var url = response.data.data;
+          _this.$refs.md.$img2Url(pos,url)
+        }
+      })
+    },
+    imgDel(pos) {
+
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
 
           const _this = this
-          this.$http.post('/blog/edit', this.ruleForm, {
+          this.$http.post('/user/updateBlog', this.ruleForm, {
             headers: {
               "Authorization": localStorage.getItem("token")
             }
@@ -82,12 +166,12 @@ export default {
     console.log(blogId)
     const _this = this
     if (blogId) {
-      this.$axios.get('/blog/' + blogId).then(res => {
+      this.$http.get('/blog/' + blogId).then(res => {
         const blog = res.data.data
         _this.ruleForm.id = blog.id
         _this.ruleForm.title = blog.title
         _this.ruleForm.description = blog.description
-        _this.ruleForm.content = blog.content
+        _this.ruleForm.context = blog.context
       })
     }
 

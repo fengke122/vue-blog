@@ -1,64 +1,108 @@
 <template>
   <div>
-    <canvas ref="canvas" :width="captchaWidth" :height="captchaHeight"></canvas>
-    <img :src="captchaImage" alt="验证码" @click="refreshCaptcha">
+
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="博客标题" prop="title">
+        <el-input v-model="ruleForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="博客摘要" prop="description">
+        <el-input type="textarea" v-model="ruleForm.description"></el-input>
+      </el-form-item>
+      <el-form-item label="博客正文" prop="content">
+        <mavon-editor
+            v-model="ruleForm.content"
+            ref="md"
+            @imgAdd="imgAdd"
+            @imgDel="imgDel"
+            @save="saveMavon"
+        ></mavon-editor>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
+
 export default {
+  name: "AddBlog",
+
   data() {
     return {
-      captchaWidth: 100, // 图形验证码的宽度
-      captchaHeight: 40, // 图形验证码的高度
-      captchaCode: '', // 验证码字符串
-      captchaImage: null // 验证码图片的 Base64 编码
-    }
-  },
-  mounted() {
-    this.generateCaptcha()
+      ruleForm: {
+        title: '',
+        description: '',
+        content: '',
+        html: ''
+      },
+      rules: {
+        title: [
+          { required: true, message: '请输入博客标题', trigger: 'blur' },
+          { min: 3, max: 25, message: '长度在 3 到 25 个字符', trigger: 'blur' }
+        ],
+        description: [
+          { required: true, message: '请简述博客内容', trigger: 'change' }
+        ],
+        content: [
+          { required: true, message: '请输入博客正文', trigger: 'change' }
+        ],
+      }
+    };
   },
   methods: {
-    // 生成随机的图形验证码
-    generateCaptcha() {
-      const canvas = this.$refs.canvas
-      const ctx = canvas.getContext('2d')
-      this.captchaCode = this.randomCode()
+    saveMavon(value,render){
 
-      // 绘制图形验证码
-      ctx.fillStyle = '#f2f2f2'
-      ctx.fillRect(0, 0, this.captchaWidth, this.captchaHeight)
-      ctx.font = 'bold 30px sans-serif'
-      ctx.textBaseline = 'middle'
-      ctx.textAlign = 'center'
-      ctx.fillStyle = '#333'
-      ctx.fillText(this.captchaCode, this.captchaWidth / 2, this.captchaHeight / 2)
+      console.log("this is render"+render);
+      console.log("this is value"+value);
+      console.log(this.$refs.md.d_render);
+    },
+    // 将图片上传到服务器，返回地址替换到md中
+    imgAdd(pos, $file) {
+      var _this = this
+      var formdata = new FormData();
+      formdata.append('image', $file);
+      this.$http.post("/blog/upload",formdata,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((response) => {
+        // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+        if (response.status === 200) {
+          var url = response.data.data;
+          _this.$refs.md.$img2Url(pos,url)
+        }
+      })
+    },
+    imgDel(pos) {
 
-      // 将 Canvas 转换为 Base64 格式
-      this.captchaImage = canvas.toDataURL()
     },
-    // 生成随机的验证码字符
-    randomCode() {
-      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-      let code = ''
-      for (let i = 0; i < 4; i++) {
-        const index = Math.floor(Math.random() * chars.length)
-        code += chars[index]
-      }
-      return code
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const _this = this
+          _this.ruleForm.content = _this.$refs.md.d_value;
+          this.$http.post("/blog/add",this.ruleForm,{
+            headers: {
+              "Authorization": localStorage.getItem("token")
+            }
+          })
+          // _this.$router.push("/userIndex")
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
-    // 刷新验证码
-    refreshCaptcha() {
-      this.generateCaptcha()
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   }
 }
 </script>
 
 <style scoped>
-img {
-  display: block;
-  margin-top: 10px;
-  cursor: pointer;
-}
+
 </style>
