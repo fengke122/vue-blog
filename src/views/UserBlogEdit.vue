@@ -5,9 +5,9 @@
         <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
 
-      <el-form-item label="摘要" prop="description">
-        <el-input type="textarea" v-model="ruleForm.description"></el-input>
-      </el-form-item>
+<!--      <el-form-item label="摘要" prop="description">-->
+<!--        <el-input type="textarea" v-model="ruleForm.description"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-select v-model="ruleForm.tagname" placeholder="请选择分类">
           <el-option
@@ -20,7 +20,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-select v-model="ruleForm.classname" placeholder="请选择分类">
+        <el-select v-model="ruleForm.classname" placeholder="请选择标签">
           <el-option
               v-for="item in ruleForm.options2"
               :key="item.value"
@@ -115,17 +115,15 @@ export default {
     imgAdd(pos, $file) {
       var _this = this
       var formdata = new FormData();
-      formdata.append('image', $file);
+      formdata.append('file', $file);
       this.$http.post("/api/upload",formdata,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then((response) => {
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-        if (response.status === 200) {
           var url = response.data.data;
           _this.$refs.md.$img2Url(pos,url)
-        }
       })
     },
     imgDel(pos) {
