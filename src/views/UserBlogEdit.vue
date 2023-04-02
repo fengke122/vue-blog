@@ -122,7 +122,7 @@ export default {
         }
       }).then((response) => {
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-          var url = response.data.data;
+          var url = response;
           _this.$refs.md.$img2Url(pos,url)
       })
     },

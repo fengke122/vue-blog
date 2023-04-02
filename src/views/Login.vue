@@ -58,7 +58,15 @@ export default {
           this.$cookie.set('JSESSIONID', JSESSIONID, 1); // 设置过期时间为 1 天
           // 登录成功，跳转到 /userindex 页面
           this.$router.push('/userindex')
-        } else {
+        }
+        else if(response.code) {
+          // 登录成功，从后端返回的响应中获取 sessionid，并将其存储在 cookie 中
+          const JSESSIONID = response.data;
+          this.$cookie.set('JSESSIONID', JSESSIONID, 1); // 设置过期时间为 1 天
+          // 登录成功，跳转到 /userindex 页面
+          this.$router.push('/userdetil')
+        }
+        else {
           // 登录失败，打印错误信息到控制台
           console.error('登录失败')
         }

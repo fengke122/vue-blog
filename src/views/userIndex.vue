@@ -166,8 +166,7 @@
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
-                  <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <i class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
               <div class="img-previeww-wrap">
@@ -207,7 +206,6 @@ export default {
       flag: true,
       showingContent: 'content1',
       uploadSuccess: false, // 用于标记是否已经上传成功 可以控制按钮是否启用
-      imageUrl: ''  // 用于显示上传成功的图片
     }
   },
   computed: {
@@ -231,8 +229,7 @@ export default {
     handleAvatarSuccess(response,res, file) {
       // 上传成功时将 uploadSuccess 标记为 true，启用按钮
       this.uploadSuccess = true
-      // 使用 URL.createObjectURL 生成图片的临时地址
-      this.imageUrl = URL.createObjectURL(file.raw);
+      this.getUserInfo();
       console.log(response, res, file)
     },
     beforeAvatarUpload(file) {
