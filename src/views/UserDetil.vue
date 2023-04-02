@@ -319,6 +319,7 @@
                 job: String(this.ruleForm.job[1])
               }
             }).then((response) => {
+              this.$router.push("/userindex")
               this.$message('ok!');
             }).catch((error) => {
               console.log(error);
