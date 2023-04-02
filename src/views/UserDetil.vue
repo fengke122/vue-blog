@@ -4,7 +4,7 @@
             <el-form-item prop="image" label-width="0">
                 <el-upload
                         class="avatar-uploader photo"
-                        action="/api/upload"
+                        action="http://localhost:8081/api/upload"
                         name="file"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
@@ -289,8 +289,9 @@
 			resetForm(formName) {
 				this.$refs[formName].resetFields();
 			},
-			handleAvatarSuccess(res, file) {
-				this.ruleForm.image = URL.createObjectURL(file.raw);
+			handleAvatarSuccess(res) {
+        console.log(res)
+				this.ruleForm.image = res;
 			},
 			beforeAvatarUpload(file) {
 				const isJPG = file.type === 'image/jpeg';
@@ -307,6 +308,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            // /user/firstSaveUserDetail
             this.$http.get('/user/firstSaveUserDetail', {
               params: {
                 image: this.ruleForm.image,
