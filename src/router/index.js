@@ -9,6 +9,7 @@ import Test from "@/views/Test.vue";
 import Changepsw from "@/views/Changepsw.vue";
 import MyBlog from "@/views/MyBlog.vue";
 import UserBlogEdit from "@/views/UserBlogEdit.vue";
+import BlogShow from "@/views/BlogShow.vue";
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,11 @@ const routes = [
     path: '/userblogeditor',
     name: 'userblogeditor',
     component: UserBlogEdit
+  },
+  {
+    path: '/blog/:id',
+    name: 'blog',
+    component: BlogShow
   }
 ]
 

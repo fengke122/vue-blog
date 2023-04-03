@@ -71,9 +71,11 @@
     </el-container>
     <div class="container" v-show="flag">
       <div class="left">
-        <div class="blog-list" v-for="(item, index) in paginatedItems" :key="index" >
-          <h2>{{ item.title }}</h2>
-          <p>{{ item.time }}</p>
+        <div class="blog-list" v-for="(item, index) in paginatedItems"  :key="index" @click="toBlog(item.id)">
+          <div >
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.time }}</p>
+          </div>
         </div>
         <el-pagination
             @current-change="handleCurrentChange"
@@ -135,17 +137,17 @@ export default {
       username: "小明",
       avatarUrl: require('@/assets/img/tx.jpg'),
       items: [
-        { title: '文章标题1', time: '2022-01-01' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
-        { title: '文章标题2', time: '2022-01-02' },
+        { id:1,title: '文章标题1', time: '2022-01-01' },
+        { id:2,title: '文章标题2', time: '2022-01-02' },
+        { id:3,title: '文章标题2', time: '2022-01-02' },
+        { id:4,title: '文章标题2', time: '2022-01-02' },
+        { id:5,title: '文章标题2', time: '2022-01-02' },
+        { id:6,title: '文章标题2', time: '2022-01-02' },
+        { id:7,title: '文章标题2', time: '2022-01-02' },
+        { id:8,title: '文章标题2', time: '2022-01-02' },
+        { id:9,title: '文章标题2', time: '2022-01-02' },
+        { id:10,title: '文章标题2', time: '2022-01-02' },
+        { id:11,title: '文章标题2', time: '2022-01-02' },
       ]
     }
   },
@@ -159,6 +161,13 @@ export default {
   methods: {
     handleCurrentChange(val) {
       this.currentPage = val;
+    },
+    toBlog(id) {
+      console.log(id)
+      //路由params传参
+      this.$router.push({name:'blog',params: {id:id}})
+     // html 取参 $route.query.id
+     // script 取参 this.$route.query.id
     }
   }
 }

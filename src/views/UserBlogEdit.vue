@@ -4,14 +4,10 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
-
-<!--      <el-form-item label="摘要" prop="description">-->
-<!--        <el-input type="textarea" v-model="ruleForm.description"></el-input>-->
-<!--      </el-form-item>-->
       <el-form-item>
         <el-select v-model="ruleForm.tagname" placeholder="请选择分类">
           <el-option
-              v-for="item in ruleForm.options2"
+              v-for="item in ruleForm.options"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -33,6 +29,7 @@
       <el-form-item label="内容" prop="context">
         <mavon-editor
             v-model="ruleForm.context"
+            :toolbars="ruleForm.toolbars"
             ref="md"
             @imgAdd="imgAdd"
             @imgDel="imgDel"
@@ -54,39 +51,69 @@ export default {
   data() {
     return {
       ruleForm: {
-        bid:'',
-        id: '',
         title: '',
         tagname: '',
         classname: '',
         description: '',
         context: '',
         hot: '',
+        addtime:'',
         isalive:'',
+        toolbars: {
+          bold: true, // 粗体
+          italic: true, // 斜体
+          header: true, // 标题
+          underline: true, // 下划线
+          strikethrough: true, // 中划线
+          mark: true, // 标记
+          superscript: true, // 上角标
+          subscript: true, // 下角标
+          quote: true, // 引用
+          ol: true, // 有序列表
+          ul: true, // 无序列表
+          link: true, // 链接
+          imagelink: true, // 图片链接
+          code: true, // code
+          table: true, // 表格
+          fullscreen: true, // 全屏编辑
+          readmodel: true, // 沉浸式阅读
+          htmlcode: true, // 展示html源码
+          help: true, // 帮助
+          undo: true, // 上一步
+          redo: true, // 下一步
+          trash: true, // 清空
+          save: true, // 保存（触发events中的save事件）
+          navigation: true, // 导航目录
+          alignleft: true, // 左对齐
+          aligncenter: true, // 居中
+          alignright: true, // 右对齐
+          subfield: true, // 单双栏模式
+          preview: true // 预览
+        },
         options: [{
-          value: '选项1',
+          value: 'Vue',
           label: 'Vue'
         }, {
-          value: '选项2',
+          value: 'Git',
           label: 'Git'
         }, {
-          value: '选项3',
+          value: 'HTML5',
           label: 'HTML5'
         }, {
-          value: '选项4',
+          value: 'Java',
           label: 'Java'
         }, {
-          value: '选项5',
+          value: 'Webpack',
           label: 'Webpack'
         }],
         options2: [{
-          value: '选项1',
+          value: 'Vue',
           label: 'Vue'
         }, {
-          value: '选项2',
+          value: 'Java',
           label: 'Java'
         }, {
-          value: '选项3',
+          value: 'SpringBoot',
           label: 'SpringBoot'
         }]
       },
@@ -134,7 +161,9 @@ export default {
         if (valid) {
 
           const _this = this
-          this.$http.post('/user/updateBlog', this.ruleForm, {
+          const { title, tagname,classname,context,hot,isalive,addtime } = this.ruleForm; // 获取需要提交的数据
+          const formData =  { title, tagname,classname,context,hot,isalive,addtime }; // 构造提交的数据对象
+          this.$http.post('/user/updateBlog', formData, {
             headers: {
               "Authorization": localStorage.getItem("token")
             }
@@ -142,9 +171,6 @@ export default {
             console.log(res)
             _this.$alert('操作成功', '提示', {
               confirmButtonText: '确定',
-              // callback: action => {
-              //   _this.$router.push("/blogs")
-              // }
             });
 
           })
@@ -159,21 +185,6 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
-  created() {
-    const blogId = this.$route.params.blogId
-    console.log(blogId)
-    const _this = this
-    if (blogId) {
-      this.$http.get('/blog/' + blogId).then(res => {
-        const blog = res.data.data
-        _this.ruleForm.id = blog.id
-        _this.ruleForm.title = blog.title
-        _this.ruleForm.description = blog.description
-        _this.ruleForm.context = blog.context
-      })
-    }
-
-  }
 }
 
 </script>
