@@ -54,7 +54,6 @@ export default {
         title: '',
         tagname: '',
         classname: '',
-        description: '',
         context: '',
         hot: '',
         addtime:'',

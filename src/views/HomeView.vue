@@ -1,5 +1,5 @@
 <template>
-  <div class="home-body">
+  <div class="home-body" v-loading="loading">
     <el-container>
       <!--   顶部容器   -->
       <el-header direction="horizontal">
@@ -131,11 +131,12 @@ export default {
   name: 'HomeView',
   data(){
     return{
+      loading:true,
       flag: true, // 将flag传递给子组件
       currentPage: 1,
       pageSize: 7,
       username: "小明",
-      avatarUrl: require('@/assets/img/tx.jpg'),
+      avatarUrl: '',
       items: [
         { id:1,title: '文章标题1', time: '2022-01-01' },
         { id:2,title: '文章标题2', time: '2022-01-02' },
@@ -168,7 +169,35 @@ export default {
       this.$router.push({name:'blog',params: {id:id}})
      // html 取参 $route.query.id
      // script 取参 this.$route.query.id
+    },
+    //获取文章列表接口
+    getarticleslist(val) {
+      this.$http.get('/api/articleslist')
+          .then(response => {
+            console.log(this.items)
+            this.items = response.data
+            console.log(response.data)
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    //获取用户详细信息
+    getUserInfo() {
+      this.$http.get('/api/users')
+          .then(response => {
+            this.loading = false;
+            this.username = response.data.username
+            this.avatarUrl = response.data.image
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
     }
+  },
+  created() {
+    this.getarticleslist();
+    this.getUserInfo();
   }
 }
 

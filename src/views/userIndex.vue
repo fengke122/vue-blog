@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="loading">
       <el-container>
         <!--   顶部容器   -->
         <el-header direction="horizontal">
@@ -193,6 +193,7 @@ export default {
   data () {
     return {
       size: "",
+      loading:true,
       userdetil:{
         username: "小明",
         phone: "123456789",
@@ -245,33 +246,26 @@ export default {
       return isJPG && isLt2M;
     },
     getUserInfo() {
-      instance.get('/api/users')
+      this.$http.get('/api/users')
           .then(response => {
+            this.loading = false;
             this.userdetil.username = response.data.username
             this.userdetil.phone = response.data.phone
-            this.userdetil.phone = response.data.email
+            this.userdetil.email = response.data.email
             this.userdetil.code = response.data.code
             this.userdetil.job = response.data.job
             this.userdetil.exp = response.data.exp
             this.userdetil.level = response.data.level
             this.userdetil.avatarUrl = response.data.image
-            console.log(response.data) // 打印响应数据
           })
           .catch(err => {
             console.error(err) // 打印错误信息
           })
     }
   },
-  mounted() {
-
-      this.$nextTick(() => {
-        // 加上延时避免 mounted 方法比页面加载早执行 或者 对img进行块级化设置宽高进行 提前站位
-        setTimeout(() => {
-          this.getUserInfo()
-        }, 100)
-      })
-
-  }
+  created() {
+    this.getUserInfo()
+  },
 }
 </script>
 <style scoped>
