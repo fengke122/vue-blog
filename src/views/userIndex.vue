@@ -181,7 +181,21 @@
           </div>
           <div v-show="showingContent === 'content3'">3</div>
           <div v-show="showingContent === 'content4'">4</div>
-          <div v-show="showingContent === 'content5'">5</div>
+          <div v-show="showingContent === 'content5'">
+            <div>
+              <div class="mybloglist" v-for="(item,index) in paginatedItems"  :key="index" @click="toBlog(item.id)">
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.id }}</p>
+              </div>
+            </div>
+            <el-pagination
+                @current-change="handleCurrentChange"
+                :current-page.sync="currentPage"
+                :page-size.sync="pageSize"
+                :total="items.length"
+                layout="prev, pager, next"
+            ></el-pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -194,6 +208,21 @@ export default {
     return {
       size: "",
       loading:true,
+      currentPage: 1, //初始页为1
+      pageSize: 6,    //页面显示数量
+      items: [
+        { id:1,title: '文章标题1', time: '2022-01-01' },
+        { id:2,title: '文章标题2', time: '2022-01-02' },
+        { id:3,title: '文章标题2', time: '2022-01-02' },
+        { id:4,title: '文章标题2', time: '2022-01-02' },
+        { id:5,title: '文章标题2', time: '2022-01-02' },
+        { id:6,title: '文章标题2', time: '2022-01-02' },
+        { id:7,title: '文章标题2', time: '2022-01-02' },
+        { id:8,title: '文章标题2', time: '2022-01-02' },
+        { id:9,title: '文章标题2', time: '2022-01-02' },
+        { id:10,title: '文章标题2', time: '2022-01-02' },
+        { id:11,title: '文章标题2', time: '2022-01-02' },
+      ],
       userdetil:{
         username: "小明",
         phone: "123456789",
@@ -216,15 +245,15 @@ export default {
         //success 通过uploadSuccesss的布尔值来控制 更新按钮的样式
         'success': this.uploadSuccess
       }
+    },
+    paginatedItems() {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      return this.items.slice(startIndex, endIndex);
     }
   },
   methods: {
     showContent(contentName) {
-      // if (this.showingContent === contentName) {
-      //   this.showingContent = null; // 如果当前显示的是该内容，则隐藏它
-      // } else {
-      //   this.showingContent = contentName; // 否则显示该内容，并隐藏其他内容
-      // }
       this.showingContent = contentName;
     },
     handleAvatarSuccess(response,res, file) {
@@ -261,10 +290,34 @@ export default {
           .catch(err => {
             console.error(err) // 打印错误信息
           })
+    },
+    toBlog(id) {
+      console.log(id)
+      //路由params传参
+      this.$router.push({name:'blog',params: {id:id}})
+      // html 取参 $route.query.id
+      // script 取参 this.$route.query.id
+    },
+    //获取用户文章列表接口
+    getUserarticle(){
+      this.$http.get('/api/articleslist')
+          .then(response => {
+            console.log(this.items)
+            this.items = response.data
+            console.log(response.data)
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
     }
   },
   created() {
     this.getUserInfo()
+    this.getUserarticle()
+    this.userList = this.items
   },
 }
 </script>
@@ -738,7 +791,23 @@ a {
   font-size: 13px;
 }
 
+.mybloglist {
+  position: relative;
+  margin: 0 auto 20px;
+  padding: 16px 20px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: .25rem;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);;
+  box-sizing: border-box;
+  transition: all .3s;
+  background-color: #fff;
+  cursor: pointer;
+}
 
+.mybloglist:hover {
+  box-shadow: 0 2px 25px rgb(0 0 0 / 14%);
+}
 
 
 
