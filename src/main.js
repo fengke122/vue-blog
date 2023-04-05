@@ -21,8 +21,8 @@ Vue.config.productionTip = false
 
 // 创建一个 axios 实例
 const instance = axios.create({
-  baseURL: 'http://yapi.smart-xwork.cn/mock/212517', // 设置默认的基础地址
-  timeout: 5000, // 设置默认的超时时间
+  baseURL: 'http://localhost:8081', // 设置默认的基础地址
+  // timeout: 5000, // 设置默认的超时时间
   headers: { // 设置默认的请求头
     'Content-Type': 'application/json',
   }

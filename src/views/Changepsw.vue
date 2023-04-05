@@ -113,7 +113,7 @@ export default {
             // 请求成功后执行倒计时逻辑
             this.isSending = false;
             // 获取请求返回的验证码
-            this.emailcode = response.msg;
+            this.emailcode = response.data.msg;
             console.log(response.data);
           })
           .catch(error => {
@@ -128,7 +128,7 @@ export default {
       }
       else {
         this.loading = true
-        const url = `/user/changePassword?email=${this.newPassword}`;
+        const url = `/user/changePassword?newPassword=${this.newPassword}`;
         this.$http.get(url)
             .then(response => {
               console.log(response.data)
