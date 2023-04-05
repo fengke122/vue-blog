@@ -12,6 +12,8 @@ Vue.use(mavonEditor)
 
 
 Vue.prototype.$cookie = cookie;  //配置时候prototype.$这里的名字自己定义不是固定是cookie
+axios.defaults.withCredentials=true
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false
