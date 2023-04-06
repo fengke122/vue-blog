@@ -131,7 +131,10 @@ export default {
               }
             }).then(response => {
               // 处理响应数据
-              if (response.code == 200) alert('注册成功');
+              if (response.code == 200) {
+                alert('注册成功');
+                this.$router.push('/login')
+              }
               else alert('注册失败');
             }).catch(error => {
               // 处理错误

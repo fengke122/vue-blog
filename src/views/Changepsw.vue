@@ -23,7 +23,7 @@
       </div>
       <div class="setp2" v-show="showingContent === 1" >
         <div style="text-align: center; " >
-          <el-input v-model="newPassword" style="width: 350px" placeholder="请输入新密码" ></el-input>
+          <el-input v-model="newPassword" style="width: 350px" placeholder="请输入新密码" show-password></el-input>
           <p class="tip" v-if="isInvalid">请输入8-16位数字和英文字母组合密码</p>
         </div>
         <div style="text-align: center;">
@@ -35,7 +35,7 @@
           <h3>修改密码成功！</h3>
           <img src="../assets/img/success.png" alt="">
         </div>
-        <div style="text-align: center;"><el-button type="primary"><router-link to="/home" class="home-btn">返回首页</router-link></el-button></div>
+        <div style="text-align: center;"><el-button type="primary"><router-link to="/userindex" class="home-btn">返回个人中心</router-link></el-button></div>
       </div>
     </div>
   </div>
