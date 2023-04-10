@@ -1,58 +1,83 @@
 <template>
   <div class="home-body" v-loading="loading">
     <div><search></search></div>
-    <div class="container" v-show="flag">
-      <div class="left">
-        <div class="blog-list" v-for="(item, index) in paginatedItems"  :key="index" @click="toBlog(item.id)">
-          <div >
-            <h2>{{ item.title }}</h2>
-            <p>{{ item.time }}</p>
+    <div class="bg">
+      <div id="top-title-box">
+        <div id="top-article">
+            <div><li><svg t="1681128940571" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27944" width="64" height="64"><path d="M0 943.786667h66.56v-100.693334z" fill="#BF7500" p-id="27945"></path><path d="M460.8 0L0 406.186667v537.6L1024 0z" fill="#FAA725" p-id="27946"></path><path d="M261.12 552.96l18.773333-17.066667-66.56-75.093333 52.906667-46.08-6.826667-6.826667-68.266666 61.44-13.653334-15.36 68.266667-61.44-6.826667-8.533333-59.733333 54.613333-35.84-39.253333 151.893333-136.533333 35.84 39.253333-64.853333 58.026667 6.826667 6.826666 71.68-64.853333 13.653333 15.36-71.68 64.853333 6.826667 6.826667 56.32-49.493333 66.56 75.093333 18.773333-17.066667 13.653333 15.36-174.08 155.306667-13.653333-15.36zM187.733333 402.773333l22.186667-18.773333-10.24-10.24-22.186667 18.773333 10.24 10.24z m42.666667-37.546666l22.186667-18.773334-10.24-10.24-22.186667 18.773334 10.24 10.24z m107.52 11.946666l-87.04 76.8 5.12 6.826667 87.04-76.8-5.12-6.826667z m-44.373333-68.266666l-10.24-10.24-22.186667 18.773333 10.24 10.24 22.186667-18.773333zM273.066667 477.866667l87.04-76.8-5.12-6.826667-87.04 76.8 5.12 6.826667z m15.36 18.773333l87.04-76.8-5.12-6.826667-87.04 76.8 5.12 6.826667z m17.066666 17.066667l87.04-76.8-6.826666-6.826667-87.04 76.8 6.826666 6.826667zM312.32 250.88l61.44-54.613333 20.48 23.893333-15.36 13.653333 95.573333 107.52c6.826667 6.826667 10.24 13.653333 11.946667 20.48 1.706667 6.826667 0 11.946667-3.413333 17.066667-3.413333 5.12-11.946667 13.653333-27.306667 27.306667-6.826667-6.826667-15.36-11.946667-23.893333-18.773334 5.12-3.413333 11.946667-8.533333 17.066666-13.653333 5.12-3.413333 5.12-8.533333 0-13.653333L356.693333 256l-22.186666 20.48-22.186667-25.6z m63.146667-58.026667l105.813333-95.573333L501.76 119.466667l-46.08 40.96 11.946667 18.773333L512 139.946667l71.68 80.213333-23.893333 20.48-52.906667-58.026667-54.613333 47.786667 52.906666 59.733333-23.893333 20.48-71.68-80.213333 30.72-27.306667-11.946667-18.773333-34.133333 30.72-18.773333-22.186667z m102.4 34.133334l22.186666-20.48c15.36 17.066667 25.6 32.426667 34.133334 46.08 25.6-5.12 52.906667-8.533333 80.213333-10.24l1.706667 32.426666c-20.48 0-44.373333 3.413333-73.386667 5.12 3.413333 20.48-1.706667 46.08-18.773333 76.8-10.24-3.413333-20.48-6.826667-34.133334-10.24 10.24-15.36 15.36-29.013333 18.773334-40.96s1.706667-25.6-3.413334-37.546666c-3.413333-11.946667-13.653333-25.6-27.306666-40.96z" fill="#FFFFFF" p-id="27947"></path></svg></li></div>
+            <div id="top-article-item">
+              <span >Vue</span>
+              <h1 class="font-title">docker从入门到入土</h1>
+              <p class="font-style">1.docker概述1.1 基本介绍 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器是完全使用沙箱机制，相互之间不会有任何接口,更重要的是容</p>
+              <p class="font-style">发布于 七月 28, 2022</p>
+            </div>
+        </div>
+        <div class="top-article2">
+          <div class="top-article2-item pb-10 px-8">
+            <span class="font-little-title font-style2">EDITOR'S SELECTION</span>
+            <span class="font-little-title"><svg style="text-anchor: end;" t="1681129983477" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="28815" width="31" height="31"><path d="M354.4 780.8c-37.4-21.8-59.5-49.9-76.2-96.9l-1.3-3.2c-3.1-6.2-9.5-10.1-16.7-10.1-2 0.1-3.8 0.4-5.5 1-8.2 2.9-13.2 11.4-11.8 20.6l1.2 4c19.2 54 46.3 88.3 90.4 114.4 0.1 0 6.5 4.3 10 4.3l2.5 0.1c1.8-0.1 3.5-0.4 5.3-1 9.4-3.4 14.3-13.8 11-23.3-1.6-4.4-5-8.2-8.9-9.9zM253.5 662.1c4.9-1.6 8.9-5 11.3-9.7 2.3-4.6 2.7-9.9 1.1-14.8-2.6-8-10-13.4-18.4-13.4-2 0-4 0.3-6 1-10.2 3.3-15.7 14.3-12.4 24.4 2.6 8 10 13.4 18.4 13.4 2.1 0 4.1-0.3 6-0.9z" fill="#6B400D" p-id="28816"></path><path d="M745.1 187.9c-9.9-9.3-24.1-11.5-36.1-5.5s-19.4 18.9-18.8 32.8c2 40.3-5 51.2-13.1 80.7-29.2-80.7-93.7-189.2-206.2-229.8-10-3.6-21-1.8-29.5 4.9-8.9 7-14 18.2-13.5 29.9 4.1 99-62.9 215-101.3 272.6-10.9-34.4-31.3-80.9-67.8-116.4-10-9.9-25-12-37.1-5-12.5 6.9-19.4 21.4-17.4 36 11.1 76.5-8.2 114.3-30.4 158.1-19.1 37.6-40.8 80.2-40.8 148.9 0 211.1 159.6 364.2 379.6 364.2 219.9 0 379.6-153.1 379.6-364.2 0.1-232.4-92.1-354.9-147.2-407.2zM512.8 915.1c-195.5 0-337.4-134.6-337.4-320 0-57.6 17.4-91.9 35.8-128.1 21-41 42.6-83.3 38.1-155.4 37.4 50.9 46.9 115 47 115.7l7 49.4 30.2-38.6c5.6-7.2 134.6-173.9 136.7-324.8 128.9 59.3 184.4 252.3 185 254.6l13.8 65.5s55.8-99 63.6-196.5c49.8 54.5 117.5 164.3 117.5 358.2 0.1 185.4-141.8 320-337.3 320z" fill="#6B400D" p-id="28817"></path><path d="M641.3 510.5l-30.9 61.9s-36.5-127.2-96.7-151.8c-7.9 46.7-33.1 78.3-55.3 111.6l-43 64.6-19.2-46c-3.9 10.8-8.7 20.3-13.3 29.3-8.9 17.6-16.6 32.7-16.6 58.6 0 87 64 147.8 155.6 147.8s155.6-60.8 155.6-147.8c0-65.5-15.7-110.9-33.2-141.1-0.8 4.3-1.8 8.6-3 12.9zM522 752.2c-73.9 0-123.5-46.3-123.5-115.3 0-2.3 0.1-4.5 0.2-6.6l12 28.6 73.6-110.2c2.7-4 5.4-7.9 8.1-11.9l0.6-0.9c12.3-18 26.2-38.2 36.6-62.2 21.8 28 41.3 73.7 50.7 106.3l21.4 73.9 38.3-76.6c3.6 18.4 5.4 38.3 5.4 59.6 0.1 69-49.6 115.3-123.4 115.3z" fill="#6B400D" p-id="28818"></path><path d="M601.7 653.9L580.4 580c-9.4-32.6-28.9-78.3-50.7-106.3-10.4 24-24.3 44.2-36.6 62.2l-0.6 0.9c-2.7 4-5.4 7.9-8.1 11.9L410.7 659l-12-28.6c-0.2 2.1-0.2 4.3-0.2 6.6 0 68.9 49.6 115.3 123.5 115.3S645.5 706 645.5 637c0-21.2-1.8-41.2-5.4-59.6l-38.4 76.5z" fill="#FFD524" p-id="28819"></path></svg>推荐文章</span>
+          </div>
+          <div class="top-article2-item2">
+            <div></div>
+            <div >
+              <span class="font-articl">MySQL</span>
+              <h1 class="font-little-title">MySQL 覆盖索引</h1>
+              <p class="font-articl">1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如其当的，在查询书本中的某个知识点不借助目录的情况下，往往都找的够呛，那么索引相较于数据库的重要性也可见一斑。 2.索引的有哪些种</p>
+              <dive><span>发布于 七月 28, 2022</span></dive>
+            </div>
+          </div>
+          <div class="top-article2-item3">
+            <div></div>
+            <div>
+              <span class="font-articl">RibbitMQ</span>
+              <h1 class="font-little-title">RibbitMQ教程</h1>
+              <p class="font-articl">RabbitMQ 实战教程1.MQ引言 1.1 什么是MQ MQ(Message Quene) : 翻译为 消息队列,通过典型的 生产者和消费者模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间</p>
+              <dive><span>发布于 七月 28, 2022</span></dive></div>
           </div>
         </div>
-        <el-pagination
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-            :page-size.sync="pageSize"
-            :total="items.length"
-            layout="prev, pager, next"
-        ></el-pagination>
       </div>
-      <div class="right">
-        <div class="right-top">
-          <div class="top-avatar">
-            <el-avatar :size="96" :src="avatarUrl" ></el-avatar>
-            <span>{{ username }}</span>
+      <div class="container" v-show="flag">
+        <div class="left">
+          <div class="blog-list" v-for="(item, index) in paginatedItems"  :key="index" @click="toBlog(item.id)">
+            <div >
+              <h2>{{ item.title }}</h2>
+              <p>{{ item.time }}</p>
+            </div>
           </div>
+          <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size.sync="pageSize"
+              :total="items.length"
+              layout="prev, pager, next"
+          ></el-pagination>
         </div>
-        <div class="num">
-          <div>
-            <h3>121</h3>
-            <h6>Articles</h6>
+        <div class="right">
+          <div class="right-top">
+            <div class="top-avatar">
+              <el-avatar :size="96" :src="avatarUrl" ></el-avatar>
+              <span>{{ username }}</span>
+            </div>
           </div>
-          <div>
-            <h3>55</h3>
-            <h6>Tags</h6>
+          <div class="num">
+            <div>
+              <h3>{{ article_numbers }}</h3>
+              <h6>Articles</h6>
+            </div>
+            <div>
+              <h3>{{ tag_numbers }}</h3>
+              <h6>Tags</h6>
+            </div>
           </div>
+          <hr>
+          <ul>
+            <li v-for="(item,index) in tags" :key="index"><router-link :to="'/blogtag/'+ item.tagname"  ><span class="category-name">{{ item.tagname }}</span><span>{{ item.tagnumbers }}</span></router-link></li>
+          </ul>
         </div>
-        <hr>
-        <ul>
-          <li><a href=""><span class="category-name">Vue</span><span>27</span></a></li>
-          <li><a href=""><span class="category-name">Webpack</span><span>4</span></a></li>
-          <li><a href=""><span class="category-name">Blog</span><span>2</span></a></li>
-          <li><a href=""><span class="category-name">VuePress</span><span>2</span></a></li>
-          <li><a href=""><span class="category-name">Node</span><span>12</span></a></li>
-          <li><a href=""><span class="category-name">SpringBoot</span><span>5</span></a></li>
-          <li><a href=""><span class="category-name">Css</span><span>39</span></a></li>
-          <li><a href=""><span class="category-name">JavaScript</span><span>3</span></a></li>
-          <li><a href=""><span class="category-name">效率</span><span>2</span></a></li>
-          <li><a href=""><span class="category-name">Git</span><span>3</span></a></li>
-          <li><a href=""><span class="category-name">HTML5</span><span>1</span></a></li>
-          <li><a href=""><span class="category-name">Sass And Less</span><span>2</span></a></li>
-          <li><a href=""><span class="category-name">TypeScript</span><span>5</span></a></li>
-        </ul>
       </div>
     </div>
     <div class="bottom-container" v-show="flag"></div>
+
   </div>
 
 </template>
@@ -72,6 +97,8 @@ export default {
       pageSize: 7,
       username: "小明",
       avatarUrl: '',
+      article_numbers:122,
+      tag_numbers:10,
       items: [
         { id:1,title: '文章标题1', time: '2022-01-01' },
         { id:2,title: '文章标题2', time: '2022-01-02' },
@@ -84,6 +111,14 @@ export default {
         { id:9,title: '文章标题2', time: '2022-01-02' },
         { id:10,title: '文章标题2', time: '2022-01-02' },
         { id:11,title: '文章标题2', time: '2022-01-02' },
+      ],
+      tags: [
+        {id:1,tagname:'Vue',tagnumbers:10},
+        {id:2,tagname:'Java',tagnumbers:10},
+        {id:3,tagname:'Go',tagnumbers:10},
+        {id:4,tagname:'C++',tagnumbers:10},
+        {id:5,tagname:'Python',tagnumbers:10},
+        {id:6,tagname:'Git',tagnumbers:10}
       ]
     }
   },
@@ -99,7 +134,6 @@ export default {
       this.currentPage = val;
     },
     toBlog(id) {
-      console.log(id)
       //路由params传参
       this.$router.push({name:'blog',params: {id:id}})
      // html 取参 $route.query.id
@@ -109,9 +143,7 @@ export default {
     getarticleslist(val) {
       this.$http.get('/api/articleslist')
           .then(response => {
-            console.log(this.items)
             this.items = response.data
-            console.log(response.data)
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -145,6 +177,13 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 99vh;
+}
+
+p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 
@@ -209,12 +248,9 @@ li {
 
 .container {
   width: 1206px;
-  height: 1100px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  position: relative;
-  top: 5px;
 
 }
 
@@ -222,15 +258,13 @@ li {
   width: 811px;
   height: 100%;
   margin-right: 10px;
-  /*border: 1px solid #e1e2e5;*/
-  /*box-shadow: 0 2px 4px rgb(0 0 0 / 14%);*/
-  /*border-radius: 4px;*/
 }
 
 .right{
   flex-grow: 1;
   border: 1px solid #e1e2e5;
   box-shadow: 0 2px 4px rgb(0 0 0 / 14%);
+  background-color: #FFFFFF;
   border-radius: 4px;
 }
 
@@ -238,8 +272,6 @@ li {
   width: 100%;
   height: 100px;
   border-top: 1px solid #e1e2e5;
-  position: relative;
-  top: 60px;
 
 }
 .blog-list {
@@ -413,6 +445,193 @@ li:nth-child(3n) a span:nth-child(2) {
 .category-name {
   font-weight: 500;
 }
+
+#top-title-box {
+  height: 910px;
+  margin: 0 auto;
+
+}
+
+
+.bg {
+  background: url("~@/assets/img/bg7.jpg");
+  background-size: cover;
+  /*background: linear-gradient(to bottom right, #dae7f6, #dedbf7, #edd8ef);*/
+  /*padding-bottom: 10px;*/
+}
+
+#top-article {
+  width: 1206px;
+  height: 50%;
+  margin: 0 auto;
+  position: relative;
+  top: 40px;
+  background-image: linear-gradient(to right, rgba(214, 217, 217, 0.1),rgba(214, 217, 217, 0.3), rgba(255, 255, 255, 0.94),#ffffff), url("~@/assets/img/xkbg.png");
+  background-size: cover;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+  transform: scale(1); /* 默认大小 */
+  transition: transform 0.2s ease-in-out; /* 添加动画过渡效果，时间为 0.2s，缓动函数为 ease-in-out */
+
+}
+
+#top-article:hover {
+  transform: scale(1.02);
+}
+
+#top-article div {
+  width: 50%;
+}
+
+#top-article-item {
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+
+}
+
+.top-article2 {
+  width: 1206px;
+  height: 40%;
+  margin: 0 auto;
+  position: relative;
+  top: 60px;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.top-article2-item {
+  width: 20%;
+  border-radius: 1rem;
+  background-image: linear-gradient(to right bottom , #dbeaf6, #e1ddf8, #f0d9ef);
+  transform: scale(1); /* 默认大小 */
+  transition: transform 0.2s ease-in-out; /* 添加动画过渡效果，时间为 0.2s，缓动函数为 ease-in-out */
+}
+
+
+
+.top-article2-item3 {
+  width: 36%;
+  border-radius: 1rem;
+  background-color: #FFFFFF;
+  transform: scale(1); /* 默认大小 */
+  transition: transform 0.2s ease-in-out; /* 添加动画过渡效果，时间为 0.2s，缓动函数为 ease-in-out */
+
+}
+
+.top-article2-item:hover,.top-article2-item2:hover,.top-article2-item3:hover {
+  transform: scale(1.02);
+}
+
+svg {
+  vertical-align: middle;
+}
+
+.font-style {
+  color: #333334;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 400;
+}
+
+.font-little-title {
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.ding {
+  font-family: "钉钉进步体",sans-serif;
+}
+
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.top-article2-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+.top-article2-item span:nth-child(1) {
+  text-align: center;
+}
+
+.font-style2 {
+  background-image: -webkit-linear-gradient(bottom, rgb(201, 115, 255), rgb(20, 11, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.font-title {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.top-article2-item2 {
+  width: 36%;
+  border-radius: 1rem;
+  transform: scale(1); /* 默认大小 */
+  background-color: #FFFFFF;
+  transition: transform 0.2s ease-in-out; /* 添加动画过渡效果，时间为 0.2s，缓动函数为 ease-in-out */
+  display: flex;
+  flex-direction: column;
+}
+
+.top-article2-item2 div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0),rgb(255, 255, 255, 0.3),rgba(255, 255, 255, 1)), url("~@/assets/img/t-bg.png");
+  background-size: cover;
+  height: 40%;
+}
+
+.top-article2-item2 div:nth-child(2) {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  height: 60%;
+
+}
+
+.top-article2-item3 div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0),rgb(255, 255, 255, 0.3),rgba(255, 255, 255, 1)), url("~@/assets/img/t-bg2.png");
+  background-size: cover;
+  height: 40%;
+}
+
+.top-article2-item3 div:nth-child(2) {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  height: 60%;
+}
+
+.font-articl {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-bottom: .5rem;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+
 
 
 

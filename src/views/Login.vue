@@ -51,7 +51,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(response => {
-        console.log(response.code);
+        console.log(response.data.code);
         if (response.code === 200) {
           // 登录成功，从后端返回的响应中获取 sessionid，并将其存储在 cookie 中
           const JSESSIONID = response.data;
