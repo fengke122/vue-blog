@@ -121,43 +121,43 @@ export default {
       article_numbers:122,
       tag_numbers:10,
       items: [
-        { id:1,title: '文章标题1', time: '2022-01-01' },
-        { id:2,title: '文章标题2', time: '2022-01-02' },
-        { id:3,title: '文章标题2', time: '2022-01-02' },
-        { id:4,title: '文章标题2', time: '2022-01-02' },
-        { id:5,title: '文章标题2', time: '2022-01-02' },
-        { id:6,title: '文章标题2', time: '2022-01-02' },
-        { id:7,title: '文章标题2', time: '2022-01-02' },
-        { id:8,title: '文章标题2', time: '2022-01-02' },
-        { id:9,title: '文章标题2', time: '2022-01-02' },
-        { id:10,title: '文章标题2', time: '2022-01-02' },
-        { id:11,title: '文章标题2', time: '2022-01-02' },
+        // { id:1,title: '文章标题1', time: '2022-01-01' },
+        // { id:2,title: '文章标题2', time: '2022-01-02' },
+        // { id:3,title: '文章标题2', time: '2022-01-02' },
+        // { id:4,title: '文章标题2', time: '2022-01-02' },
+        // { id:5,title: '文章标题2', time: '2022-01-02' },
+        // { id:6,title: '文章标题2', time: '2022-01-02' },
+        // { id:7,title: '文章标题2', time: '2022-01-02' },
+        // { id:8,title: '文章标题2', time: '2022-01-02' },
+        // { id:9,title: '文章标题2', time: '2022-01-02' },
+        // { id:10,title: '文章标题2', time: '2022-01-02' },
+        // { id:11,title: '文章标题2', time: '2022-01-02' },
       ],
       tags: [
-        {id:1,tagname:'Vue',tagnumbers:10},
-        {id:2,tagname:'Java',tagnumbers:10},
-        {id:3,tagname:'Go',tagnumbers:10},
-        {id:4,tagname:'C++',tagnumbers:10},
-        {id:5,tagname:'Python',tagnumbers:10},
-        {id:6,tagname:'Git',tagnumbers:10}
+        // {id:1,tagname:'Vue',tagnumbers:10},
+        // {id:2,tagname:'Java',tagnumbers:10},
+        // {id:3,tagname:'Go',tagnumbers:10},
+        // {id:4,tagname:'C++',tagnumbers:10},
+        // {id:5,tagname:'Python',tagnumbers:10},
+        // {id:6,tagname:'Git',tagnumbers:10}
       ],
       dayrank:[
-        {index:1,id:1,title:'文章1'},
-        {index:2,id:2,title:'文章1'},
-        {index:3,id:3,title:'文章1'},
-        {index:4,id:4,title:'文章1'}
+        // {index:1,id:1,title:'文章1'},
+        // {index:2,id:2,title:'文章1'},
+        // {index:3,id:3,title:'文章1'},
+        // {index:4,id:4,title:'文章1'}
       ],
       monthrank:[
-        {index:1,id:1,title:'文章1'},
-        {index:2,id:2,title:'文章1'},
-        {index:3,id:3,title:'文章1'},
-        {index:4,id:4,title:'文章1'}
+        // {index:1,id:1,title:'文章1'},
+        // {index:2,id:2,title:'文章1'},
+        // {index:3,id:3,title:'文章1'},
+        // {index:4,id:4,title:'文章1'}
       ],
       weekrank:[
-        {index:1,id:1,title:'文章1'},
-        {index:2,id:2,title:'文章1'},
-        {index:3,id:3,title:'文章1'},
-        {index:4,id:4,title:'文章1'}
+        // {index:1,id:1,title:'文章1'},
+        // {index:2,id:2,title:'文章1'},
+        // {index:3,id:3,title:'文章1'},
+        // {index:4,id:4,title:'文章1'}
       ],
       toparticle:{
         id:1,
@@ -197,9 +197,16 @@ export default {
     },
     //获取文章列表接口
     getarticleslist(val) {
-      this.$http.get('/api/articleslist')
+      this.$http.get('/getblogList')
           .then(response => {
-            this.items = response.data
+            let len = response.data.data.length;
+            for (let i = 0; i < len; i++) {
+              this.items.push({
+                id : response.data.data[i].bid,
+                title : response.data.data[i].title,
+                time : response.data.data[i].time,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -207,11 +214,11 @@ export default {
     },
     //获取用户详细信息
     getUserInfo() {
-      this.$http.get('/api/users')
+      this.$http.get('/user/userDetail')
           .then(response => {
             this.loading = false;
-            this.username = response.data.username
-            this.avatarUrl = response.data.image
+            this.username = response.data.data.username
+            this.avatarUrl = response.data.data.image
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -219,9 +226,18 @@ export default {
     },
     //获取月排行榜接口
     getmonthrank() {
-      this.$http.get('/api/monthrank')
+      this.$http.get('/monthblogList')
           .then(response => {
-            this.monthrank = response.data
+            // this.monthrank = response.data.data
+            let len = response.data.data.length;
+            console.log("month"+len)
+            for (let i = 0; i < len; i++) {
+              this.monthrank.push({
+                index : i,
+                id : response.data.data[i].bid,
+                title : response.data.data[i].title,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -229,9 +245,18 @@ export default {
     },
     //获取周排行榜接口
     getweekrank() {
-      this.$http.get('/api/weekrank')
+      this.$http.get('/weekblogList')
           .then(response => {
-            this.weekrank = response.data
+            // this.weekrank = response.data
+            let len = response.data.data.length;
+           console.log("week"+len)
+            for (let i = 0; i < len; i++) {
+              this.weekrank.push({
+                index : i,
+                id : response.data.data[i].bid,
+                title : response.data.data[i].title,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -239,9 +264,18 @@ export default {
     },
     //获取日排行榜接口
     getdayrank() {
-      this.$http.get('/api/dayrank')
+      this.$http.get('/dayblogList')
           .then(response => {
-            this.dayrank = response.data
+            // this.dayrank = response.data
+            let len = response.data.data.length;
+            console.log("day"+len)
+            for (let i = 0; i < len; i++) {
+              this.dayrank.push({
+                index : i,
+                id : response.data.data[i].bid,
+                title : response.data.data[i].title,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -249,9 +283,20 @@ export default {
     },
     //获取标签接口
     gettags() {
-      this.$http.get('/api/tags')
+      this.$http.get('/admin/tagSet')
           .then(response => {
-            this.tags = response.data
+            // this.tags = response.data.data.data
+
+            let len = response.data.data.data.length;
+            console.log(len+"tagset")
+
+            for (let i = 0; i < len; i++) {
+              this.tags.push({
+                index : i,
+                tagname : response.data.data.data[i].tagname,
+                tagnumbers : response.data.data.data[i].tagnum,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -259,9 +304,19 @@ export default {
     },
     //获取置顶文章接口
     gettoparticle() {
-      this.$http.get('/api/toparticle')
+      this.$http.get('/gettopblog')
           .then(response => {
-            this.toparticle = response.data
+            // this.toparticle = response.data
+
+
+              this.toparticle = ({
+                id:response.data.data.bid,
+                tag:response.data.data.tagname,
+                article: response.data.data.title,
+                time:response.data.data.addtime,
+                content:response.data.data.context
+              })
+
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -269,9 +324,22 @@ export default {
     },
     //获取推荐文章接口
     getrecommend() {
-      this.$http.get('/api/recommend')
+      this.$http.get('/blogList/recommend')
           .then(response => {
-            this.recommendarticle = response.data
+            // this.recommendarticle = response.data.data
+            let len = response.data.data.length;
+            console.log(len)
+
+            for (let i = 0; i < len; i++) {
+              this.recommendarticle.push({
+                id:response.data.data[i].bid,
+                tag:response.data.data[i].tagname,
+                article: response.data.data[i].title,
+                time:response.data.data[i].addtime,
+                content:response.data.data[i].context
+              })
+            }
+
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -281,13 +349,13 @@ export default {
 
   },
   created() {
-    // this.getarticleslist();
-    // this.getmonthrank();
-    // this.getweekrank();
-    // this.getdayrank();
-    // this.gettags();
-    // this.gettoparticle();
-    // this.getrecommend();
+    this.getarticleslist();
+    this.getmonthrank();
+    this.getweekrank();
+    this.getdayrank();
+    this.gettags();
+    this.gettoparticle();
+    this.getrecommend();
     this.getUserInfo();
   }
 }
