@@ -6,10 +6,10 @@
         <div id="top-article">
             <div><li><svg t="1681128940571" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27944" width="64" height="64"><path d="M0 943.786667h66.56v-100.693334z" fill="#BF7500" p-id="27945"></path><path d="M460.8 0L0 406.186667v537.6L1024 0z" fill="#FAA725" p-id="27946"></path><path d="M261.12 552.96l18.773333-17.066667-66.56-75.093333 52.906667-46.08-6.826667-6.826667-68.266666 61.44-13.653334-15.36 68.266667-61.44-6.826667-8.533333-59.733333 54.613333-35.84-39.253333 151.893333-136.533333 35.84 39.253333-64.853333 58.026667 6.826667 6.826666 71.68-64.853333 13.653333 15.36-71.68 64.853333 6.826667 6.826667 56.32-49.493333 66.56 75.093333 18.773333-17.066667 13.653333 15.36-174.08 155.306667-13.653333-15.36zM187.733333 402.773333l22.186667-18.773333-10.24-10.24-22.186667 18.773333 10.24 10.24z m42.666667-37.546666l22.186667-18.773334-10.24-10.24-22.186667 18.773334 10.24 10.24z m107.52 11.946666l-87.04 76.8 5.12 6.826667 87.04-76.8-5.12-6.826667z m-44.373333-68.266666l-10.24-10.24-22.186667 18.773333 10.24 10.24 22.186667-18.773333zM273.066667 477.866667l87.04-76.8-5.12-6.826667-87.04 76.8 5.12 6.826667z m15.36 18.773333l87.04-76.8-5.12-6.826667-87.04 76.8 5.12 6.826667z m17.066666 17.066667l87.04-76.8-6.826666-6.826667-87.04 76.8 6.826666 6.826667zM312.32 250.88l61.44-54.613333 20.48 23.893333-15.36 13.653333 95.573333 107.52c6.826667 6.826667 10.24 13.653333 11.946667 20.48 1.706667 6.826667 0 11.946667-3.413333 17.066667-3.413333 5.12-11.946667 13.653333-27.306667 27.306667-6.826667-6.826667-15.36-11.946667-23.893333-18.773334 5.12-3.413333 11.946667-8.533333 17.066666-13.653333 5.12-3.413333 5.12-8.533333 0-13.653333L356.693333 256l-22.186666 20.48-22.186667-25.6z m63.146667-58.026667l105.813333-95.573333L501.76 119.466667l-46.08 40.96 11.946667 18.773333L512 139.946667l71.68 80.213333-23.893333 20.48-52.906667-58.026667-54.613333 47.786667 52.906666 59.733333-23.893333 20.48-71.68-80.213333 30.72-27.306667-11.946667-18.773333-34.133333 30.72-18.773333-22.186667z m102.4 34.133334l22.186666-20.48c15.36 17.066667 25.6 32.426667 34.133334 46.08 25.6-5.12 52.906667-8.533333 80.213333-10.24l1.706667 32.426666c-20.48 0-44.373333 3.413333-73.386667 5.12 3.413333 20.48-1.706667 46.08-18.773333 76.8-10.24-3.413333-20.48-6.826667-34.133334-10.24 10.24-15.36 15.36-29.013333 18.773334-40.96s1.706667-25.6-3.413334-37.546666c-3.413333-11.946667-13.653333-25.6-27.306666-40.96z" fill="#FFFFFF" p-id="27947"></path></svg></li></div>
             <div id="top-article-item">
-              <span >Vue</span>
-              <h1 class="font-title">docker从入门到入土</h1>
-              <p class="font-style">1.docker概述1.1 基本介绍 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器是完全使用沙箱机制，相互之间不会有任何接口,更重要的是容</p>
-              <p class="font-style">发布于 七月 28, 2022</p>
+              <span >{{ toparticle.tag }}</span>
+              <h1 class="font-title" @click="toBlog2(toparticle.id)">{{ toparticle.article }}</h1>
+              <p class="font-style">{{toparticle.content}}</p>
+              <p class="font-style">发布于 {{ toparticle.time }}</p>
             </div>
         </div>
         <div class="top-article2">
@@ -20,19 +20,19 @@
           <div class="top-article2-item2">
             <div></div>
             <div >
-              <span class="font-articl">MySQL</span>
-              <h1 class="font-little-title">MySQL 覆盖索引</h1>
-              <p class="font-articl">1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如其当的，在查询书本中的某个知识点不借助目录的情况下，往往都找的够呛，那么索引相较于数据库的重要性也可见一斑。 2.索引的有哪些种</p>
-              <dive><span>发布于 七月 28, 2022</span></dive>
+              <span class="font-articl">{{recommendarticle[0].tag}}</span>
+              <h1 class="font-little-title fonthover" @click="toBlog2(recommendarticle[0].id)">{{ recommendarticle[0].article }}</h1>
+              <p class="font-articl">{{recommendarticle[0].content}}</p>
+              <dive><span>发布于 {{ recommendarticle[0].time }}</span></dive>
             </div>
           </div>
           <div class="top-article2-item3">
             <div></div>
             <div>
-              <span class="font-articl">RibbitMQ</span>
-              <h1 class="font-little-title">RibbitMQ教程</h1>
-              <p class="font-articl">RabbitMQ 实战教程1.MQ引言 1.1 什么是MQ MQ(Message Quene) : 翻译为 消息队列,通过典型的 生产者和消费者模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间</p>
-              <dive><span>发布于 七月 28, 2022</span></dive></div>
+              <span class="font-articl">{{ recommendarticle[1].tag }}</span>
+              <h1 class="font-little-title fonthover" @click="toBlog2(recommendarticle[1].id)">{{ recommendarticle[1].article }}</h1>
+              <p class="font-articl">{{ recommendarticle[1].content }}</p>
+              <dive><span>发布于 {{ recommendarticle[1].time }}</span></dive></div>
           </div>
         </div>
       </div>
@@ -53,26 +53,47 @@
           ></el-pagination>
         </div>
         <div class="right">
-          <div class="right-top">
-            <div class="top-avatar">
-              <el-avatar :size="96" :src="avatarUrl" ></el-avatar>
-              <span>{{ username }}</span>
+          <div class="right-item">
+            <div class="right-top">
+              <div class="top-avatar">
+                <el-avatar :size="96" :src="avatarUrl" ></el-avatar>
+                <span>{{ username }}</span>
+              </div>
             </div>
+            <div class="num">
+              <div>
+                <h3>{{ article_numbers }}</h3>
+                <h6>Articles</h6>
+              </div>
+              <div>
+                <h3>{{ tag_numbers }}</h3>
+                <h6>Tags</h6>
+              </div>
+            </div>
+            <hr>
+            <ul>
+              <li v-for="(item,index) in tags" :key="index"><router-link :to="'/blogtag/'+ item.tagname"  ><span class="category-name">{{ item.tagname }}</span><span>{{ item.tagnumbers }}</span></router-link></li>
+            </ul>
           </div>
-          <div class="num">
-            <div>
-              <h3>{{ article_numbers }}</h3>
-              <h6>Articles</h6>
-            </div>
-            <div>
-              <h3>{{ tag_numbers }}</h3>
-              <h6>Tags</h6>
-            </div>
+          <div class="right-item right-item2">
+            <h2><svg t="1681171686188" class="icon" viewBox="0 0 2035 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2685" width="48" height="48"><path d="M2629.9377777 197.65333333c3.09333333-0.10666667 6.08-0.10666667 9.17333333-0.10666666" fill="#ffcd00" p-id="2686"></path><path d="M1012.6577777 717.01333333c-82.13333333 0-159.25333333-32.74666667-217.28-92.26666666-58.02666667-59.52-90.02666667-138.66666667-90.02666667-222.82666667V34.34666667h617.38666667v364.69333333c0 84.90666667-32.21333333 164.8-90.77333333 224.85333333s-136.42666667 93.12-219.30666667 93.12zM780.0177777 110.93333333v290.98666667c0 131.52 104.32 238.50666667 232.64 238.50666667 129.81333333 0 235.41333333-108.26666667 235.41333333-241.38666667V110.93333333H780.0177777z" fill="#ffcd00" p-id="2687"></path><path d="M976.66844437 955.85066667l1.06453333-280.85333334 74.66666667 0.28373334-1.0656 280.85333333z" fill="#ffcd00" p-id="2688"></path><path d="M810.2321777 986.5728l0.91733333-106.66666667 408.85333334 3.5136-0.91733334 106.66666667zM929.4705777 325.44746667l133.96906667-136.8032 38.10666666 37.31733333-133.96906666 136.8032zM927.7009777 495.73866667l136.52693333-140.86293334 38.29866667 37.12-136.52693333 140.86293334zM1285.2977777 445.44v-49.28c51.52 0 86.72-26.13333333 107.84-79.68 16.32-41.6 17.06666667-83.41333333 17.06666667-85.12v-38.4h-117.33333334v-49.28H1455.64444437v87.89333333c0 2.13333333-0.53333333 52.8-20.69333334 104.10666667-12.26666667 31.25333333-29.33333333 56.42666667-50.66666666 74.77333333-26.98666667 23.14666667-60.26666667 34.98666667-98.98666667 34.98666667zM743.00444437 443.84v-51.09333333c-51.30666667 0-86.4-27.09333333-107.41333334-82.77333334-16.32-43.2-16.96-86.61333333-16.96-88.32v-39.89333333h116.69333334v-51.09333333h-162.13333334V221.86666667c0 2.24 0.53333333 54.82666667 20.58666667 108.05333333 12.26666667 32.53333333 29.22666667 58.56 50.56 77.65333333 26.88 24 60.05333333 36.26666667 98.66666667 36.26666667z" fill="#ffcd00" p-id="2689"></path></svg>
+              月排行榜</h2>
+            <span v-for="item in monthrank" class="font-right" @click="toBlog(item.id)">{{item.id }} {{item.title}}</span>
           </div>
-          <hr>
-          <ul>
-            <li v-for="(item,index) in tags" :key="index"><router-link :to="'/blogtag/'+ item.tagname"  ><span class="category-name">{{ item.tagname }}</span><span>{{ item.tagnumbers }}</span></router-link></li>
-          </ul>
+          <div class="right-item right-item3">
+            <h2>
+              <svg t="1681172818420" class="icon" viewBox="0 0 2035 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3269" width="48" height="48"><path d="M2629.9377777 197.65333333c3.09333333-0.10666667 6.08-0.10666667 9.17333333-0.10666666" fill="#dbdbdb" p-id="3270"></path><path d="M1012.6577777 717.01333333c-82.13333333 0-159.25333333-32.74666667-217.28-92.26666666-58.02666667-59.52-90.02666667-138.66666667-90.02666667-222.82666667V34.34666667h617.38666667v364.69333333c0 84.90666667-32.21333333 164.8-90.77333333 224.85333333s-136.42666667 93.12-219.30666667 93.12zM780.0177777 110.93333333v290.98666667c0 131.52 104.32 238.50666667 232.64 238.50666667 129.81333333 0 235.41333333-108.26666667 235.41333333-241.38666667V110.93333333H780.0177777z" fill="#dbdbdb" p-id="3271"></path><path d="M976.66844437 955.85066667l1.06453333-280.85333334 74.66666667 0.28373334-1.0656 280.85333333z" fill="#dbdbdb" p-id="3272"></path><path d="M810.2321777 986.5728l0.91733333-106.66666667 408.85333334 3.5136-0.91733334 106.66666667zM929.4705777 325.44746667l133.96906667-136.8032 38.10666666 37.31733333-133.96906666 136.8032zM927.7009777 495.73866667l136.52693333-140.86293334 38.29866667 37.12-136.52693333 140.86293334zM1285.2977777 445.44v-49.28c51.52 0 86.72-26.13333333 107.84-79.68 16.32-41.6 17.06666667-83.41333333 17.06666667-85.12v-38.4h-117.33333334v-49.28H1455.64444437v87.89333333c0 2.13333333-0.53333333 52.8-20.69333334 104.10666667-12.26666667 31.25333333-29.33333333 56.42666667-50.66666666 74.77333333-26.98666667 23.14666667-60.26666667 34.98666667-98.98666667 34.98666667zM743.00444437 443.84v-51.09333333c-51.30666667 0-86.4-27.09333333-107.41333334-82.77333334-16.32-43.2-16.96-86.61333333-16.96-88.32v-39.89333333h116.69333334v-51.09333333h-162.13333334V221.86666667c0 2.24 0.53333333 54.82666667 20.58666667 108.05333333 12.26666667 32.53333333 29.22666667 58.56 50.56 77.65333333 26.88 24 60.05333333 36.26666667 98.66666667 36.26666667z" fill="#dbdbdb" p-id="3273"></path></svg>
+              周排行榜
+            </h2>
+            <span v-for="item in weekrank" class="font-right">{{item.id }} {{item.title}}</span>
+          </div>
+          <div class="right-item right-item4">
+            <h2>
+              <svg t="1681172818420" class="icon" viewBox="0 0 2035 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3269" width="48" height="48"><path d="M2629.9377777 197.65333333c3.09333333-0.10666667 6.08-0.10666667 9.17333333-0.10666666" fill="#A67D3D" p-id="3270"></path><path d="M1012.6577777 717.01333333c-82.13333333 0-159.25333333-32.74666667-217.28-92.26666666-58.02666667-59.52-90.02666667-138.66666667-90.02666667-222.82666667V34.34666667h617.38666667v364.69333333c0 84.90666667-32.21333333 164.8-90.77333333 224.85333333s-136.42666667 93.12-219.30666667 93.12zM780.0177777 110.93333333v290.98666667c0 131.52 104.32 238.50666667 232.64 238.50666667 129.81333333 0 235.41333333-108.26666667 235.41333333-241.38666667V110.93333333H780.0177777z" fill="#A67D3D" p-id="3271"></path><path d="M976.66844437 955.85066667l1.06453333-280.85333334 74.66666667 0.28373334-1.0656 280.85333333z" fill="#A67D3D" p-id="3272"></path><path d="M810.2321777 986.5728l0.91733333-106.66666667 408.85333334 3.5136-0.91733334 106.66666667zM929.4705777 325.44746667l133.96906667-136.8032 38.10666666 37.31733333-133.96906666 136.8032zM927.7009777 495.73866667l136.52693333-140.86293334 38.29866667 37.12-136.52693333 140.86293334zM1285.2977777 445.44v-49.28c51.52 0 86.72-26.13333333 107.84-79.68 16.32-41.6 17.06666667-83.41333333 17.06666667-85.12v-38.4h-117.33333334v-49.28H1455.64444437v87.89333333c0 2.13333333-0.53333333 52.8-20.69333334 104.10666667-12.26666667 31.25333333-29.33333333 56.42666667-50.66666666 74.77333333-26.98666667 23.14666667-60.26666667 34.98666667-98.98666667 34.98666667zM743.00444437 443.84v-51.09333333c-51.30666667 0-86.4-27.09333333-107.41333334-82.77333334-16.32-43.2-16.96-86.61333333-16.96-88.32v-39.89333333h116.69333334v-51.09333333h-162.13333334V221.86666667c0 2.24 0.53333333 54.82666667 20.58666667 108.05333333 12.26666667 32.53333333 29.22666667 58.56 50.56 77.65333333 26.88 24 60.05333333 36.26666667 98.66666667 36.26666667z" fill="#A67D3D" p-id="3273"></path></svg>
+              日排行榜
+            </h2>
+            <span v-for="item in dayrank" class="font-right">{{item.id }} {{item.title}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -119,6 +140,35 @@ export default {
         {id:4,tagname:'C++',tagnumbers:10},
         {id:5,tagname:'Python',tagnumbers:10},
         {id:6,tagname:'Git',tagnumbers:10}
+      ],
+      dayrank:[
+        {index:1,id:1,title:'文章1'},
+        {index:2,id:2,title:'文章1'},
+        {index:3,id:3,title:'文章1'},
+        {index:4,id:4,title:'文章1'}
+      ],
+      monthrank:[
+        {index:1,id:1,title:'文章1'},
+        {index:2,id:2,title:'文章1'},
+        {index:3,id:3,title:'文章1'},
+        {index:4,id:4,title:'文章1'}
+      ],
+      weekrank:[
+        {index:1,id:1,title:'文章1'},
+        {index:2,id:2,title:'文章1'},
+        {index:3,id:3,title:'文章1'},
+        {index:4,id:4,title:'文章1'}
+      ],
+      toparticle:{
+        id:1,
+        article:'docker从入门到入土',
+        content:'1.docker概述1.1 基本介绍 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到',
+        time: '2022-01-01',
+        tag:'Docker'
+      },
+      recommendarticle:[
+          {id:1,tag:'MySQL',article: 'MySQL覆盖索引',time:'2022-01-01',content:'1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如'},
+        {id:2,tag:'RibbitMQ',article: 'RibbitMQ教程',time:'2022-01-01',content:'1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如'}
       ]
     }
   },
@@ -138,6 +188,12 @@ export default {
       this.$router.push({name:'blog',params: {id:id}})
      // html 取参 $route.query.id
      // script 取参 this.$route.query.id
+    },
+    toBlog2(id) {
+      //路由params传参
+      this.$router.push({name:'blog',params: {id:id}})
+      // html 取参 $route.query.id
+      // script 取参 this.$route.query.id
     },
     //获取文章列表接口
     getarticleslist(val) {
@@ -160,10 +216,78 @@ export default {
           .catch(err => {
             console.error(err) // 打印错误信息
           })
-    }
+    },
+    //获取月排行榜接口
+    getmonthrank() {
+      this.$http.get('/api/monthrank')
+          .then(response => {
+            this.monthrank = response.data
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    //获取周排行榜接口
+    getweekrank() {
+      this.$http.get('/api/weekrank')
+          .then(response => {
+            this.weekrank = response.data
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    //获取日排行榜接口
+    getdayrank() {
+      this.$http.get('/api/dayrank')
+          .then(response => {
+            this.dayrank = response.data
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    //获取标签接口
+    gettags() {
+      this.$http.get('/api/tags')
+          .then(response => {
+            this.tags = response.data
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    //获取置顶文章接口
+    gettoparticle() {
+      this.$http.get('/api/toparticle')
+          .then(response => {
+            this.toparticle = response.data
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    //获取推荐文章接口
+    getrecommend() {
+      this.$http.get('/api/recommend')
+          .then(response => {
+            this.recommendarticle = response.data
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+
+
   },
   created() {
-    this.getarticleslist();
+    // this.getarticleslist();
+    // this.getmonthrank();
+    // this.getweekrank();
+    // this.getdayrank();
+    // this.gettags();
+    // this.gettoparticle();
+    // this.getrecommend();
     this.getUserInfo();
   }
 }
@@ -262,10 +386,16 @@ li {
 
 .right{
   flex-grow: 1;
+
+}
+
+.right-item {
   border: 1px solid #e1e2e5;
   box-shadow: 0 2px 4px rgb(0 0 0 / 14%);
   background-color: #FFFFFF;
   border-radius: 4px;
+  margin-bottom: 20px;
+
 }
 
 .bottom-container{
@@ -631,7 +761,42 @@ svg {
   word-break: break-all;
 }
 
+.right-item2,.right-item3,.right-item4 {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
 
+.font-right {
+  padding-left: 20px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.right-item2 span:hover {
+  cursor: pointer;
+  color: #a8a8a9;
+}
+
+.right-item3 span:hover {
+  cursor: pointer;
+  color: #a8a8a9;
+}
+
+.right-item4 span:hover {
+  cursor: pointer;
+  color: #a8a8a9;
+}
+
+#top-article-item h1:hover {
+  cursor: pointer;
+  color: #a8a8a9;
+}
+
+.fonthover:hover {
+  cursor: pointer;
+  color: #a8a8a9;
+}
 
 
 
