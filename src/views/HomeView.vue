@@ -167,8 +167,8 @@ export default {
         tag:'Docker'
       },
       recommendarticle:[
-          {id:1,tag:'MySQL',article: 'MySQL覆盖索引',time:'2022-01-01',content:'1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如'},
-        {id:2,tag:'RibbitMQ',article: 'RibbitMQ教程',time:'2022-01-01',content:'1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如'}
+        //   {id:1,tag:'MySQL',article: 'MySQL覆盖索引',time:'2022-01-01',content:'1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如'},
+        // {id:2,tag:'RibbitMQ',article: 'RibbitMQ教程',time:'2022-01-01',content:'1.什么是索引索引（在 MySQL 中也叫“键key”）是存储引擎快速找到记录的一种数据结构，通俗来说类似书本的目录，这个比方虽然被用的最多但是也是最恰如'}
       ]
     }
   },
@@ -228,9 +228,7 @@ export default {
     getmonthrank() {
       this.$http.get('/monthblogList')
           .then(response => {
-            // this.monthrank = response.data.data
             let len = response.data.data.length;
-            console.log("month"+len)
             for (let i = 0; i < len; i++) {
               this.monthrank.push({
                 index : i,
@@ -247,9 +245,7 @@ export default {
     getweekrank() {
       this.$http.get('/weekblogList')
           .then(response => {
-            // this.weekrank = response.data
             let len = response.data.data.length;
-           console.log("week"+len)
             for (let i = 0; i < len; i++) {
               this.weekrank.push({
                 index : i,
@@ -266,9 +262,7 @@ export default {
     getdayrank() {
       this.$http.get('/dayblogList')
           .then(response => {
-            // this.dayrank = response.data
             let len = response.data.data.length;
-            console.log("day"+len)
             for (let i = 0; i < len; i++) {
               this.dayrank.push({
                 index : i,
@@ -285,11 +279,7 @@ export default {
     gettags() {
       this.$http.get('/admin/tagSet')
           .then(response => {
-            // this.tags = response.data.data.data
-
             let len = response.data.data.data.length;
-            console.log(len+"tagset")
-
             for (let i = 0; i < len; i++) {
               this.tags.push({
                 index : i,
@@ -306,9 +296,6 @@ export default {
     gettoparticle() {
       this.$http.get('/gettopblog')
           .then(response => {
-            // this.toparticle = response.data
-
-
               this.toparticle = ({
                 id:response.data.data.bid,
                 tag:response.data.data.tagname,
@@ -328,8 +315,7 @@ export default {
           .then(response => {
             // this.recommendarticle = response.data.data
             let len = response.data.data.length;
-            console.log(len)
-
+            console.log(len+"recommend")
             for (let i = 0; i < len; i++) {
               this.recommendarticle.push({
                 id:response.data.data[i].bid,
