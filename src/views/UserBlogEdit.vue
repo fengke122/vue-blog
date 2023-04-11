@@ -1,53 +1,67 @@
 <template>
   <div class="m-content">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="ruleForm.title"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="ruleForm.tagname" placeholder="请选择分类">
-          <el-option
-              v-for="item in ruleForm.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
+    <search></search>
+    <div class="contanier">
+      <div class="main">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="标题" prop="title">
+            <el-input v-model="ruleForm.title"></el-input>
+          </el-form-item>
 
-      <el-form-item>
-        <el-select v-model="ruleForm.classname" placeholder="请选择标签">
-          <el-option
-              v-for="item in ruleForm.options2"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
+          <div id="selectbox">
+            <el-form-item>
+              <el-select v-model="ruleForm.tagname" placeholder="请选择分类">
+                <el-option
+                    v-for="item in ruleForm.options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="ruleForm.classname" placeholder="请选择标签">
+                <el-option
+                    v-for="item in ruleForm.options2"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div>
 
-      <el-form-item label="内容" prop="context">
-        <mavon-editor
-            v-model="ruleForm.context"
-            :toolbars="ruleForm.toolbars"
-            ref="md"
-            @imgAdd="imgAdd"
-            @imgDel="imgDel"
-            @save="saveMavon"
-        ></mavon-editor>
-      </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+          <el-form-item label="内容" prop="context">
+              <mavon-editor
+                  v-model="ruleForm.context"
+                  :toolbars="ruleForm.toolbars"
+                  ref="md"
+                  @imgAdd="imgAdd"
+                  @imgDel="imgDel"
+                  @save="saveMavon"
+              ></mavon-editor>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+
+
 
   </div>
 </template>
 <script>
+import search from "@/components/search.vue";
 export default {
   name: "UserBlogEdit",
+  components:{
+    search
+  },
   data() {
     return {
       ruleForm: {
@@ -190,5 +204,33 @@ export default {
 <style scoped>
 .m-content {
   text-align: center;
+}
+
+.contanier {
+  height: 902px;
+  background: url("~@/assets/img/bg8.jpg");
+  background-size: cover;
+}
+.main {
+  height: 700px;
+  margin: 0 300px;
+  position: relative;
+  top: 80px;
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding-top: 50px;
+  padding-right: 20px;
+}
+
+
+
+#selectbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.markdown-body {
+  height: 500px;
 }
 </style>
