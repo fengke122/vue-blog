@@ -256,6 +256,7 @@ export default {
           .catch(err => {
             console.error(err) // 打印错误信息
           })
+      //this.getUserarticle()
 
     },
     //获取用户文章列表接口
