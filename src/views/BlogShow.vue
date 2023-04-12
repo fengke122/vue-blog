@@ -66,7 +66,7 @@ export default {
   methods:{
     getarticle() {
       //获取文章详细信息接口
-      var bid = this.id
+      let bid = this.id
       this.$http.get('/api/article',{params:{bid}})
           .then(response => {
             this.loading = false;
