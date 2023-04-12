@@ -67,16 +67,16 @@ export default {
     getarticle() {
       //获取文章详细信息接口
       let bid = this.id
-      this.$http.get('/api/article',{params:{bid}})
+      this.$http.get('/blog/'+bid)
           .then(response => {
             this.loading = false;
-            this.title = response.data.title;
-            this.tagname = response.data.tagname
-            this.classname = response.data.classname
-            this.hot = response.data.hot
-            this.addtime = response.data.addtime
-            this.isalive = response.data.isalive
-            this.context = response.data.context
+            this.title = response.data.data.title;
+            this.tagname = response.data.data.tagname
+            this.classname = response.data.data.classname
+            this.hot = response.data.data.hot
+            this.addtime = response.data.data.addtime
+            this.isalive = response.data.data.isalive
+            this.context = response.data.data.context
           })
           .catch(err => {
             console.error(err) // 打印错误信息

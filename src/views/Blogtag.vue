@@ -32,24 +32,24 @@ export default {
   data() {
     return{
       tags: [
-        {id:1,tagname:'Vue',tagnumbers:10},
-        {id:2,tagname:'Java',tagnumbers:10},
-        {id:3,tagname:'Go',tagnumbers:10},
-        {id:4,tagname:'C++',tagnumbers:10},
-        {id:5,tagname:'Python',tagnumbers:10},
-        {id:6,tagname:'Git',tagnumbers:10}
+        // {id:1,tagname:'Vue',tagnumbers:10},
+        // {id:2,tagname:'Java',tagnumbers:10},
+        // {id:3,tagname:'Go',tagnumbers:10},
+        // {id:4,tagname:'C++',tagnumbers:10},
+        // {id:5,tagname:'Python',tagnumbers:10},
+        // {id:6,tagname:'Git',tagnumbers:10}
       ],
       articles:[
-        {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
-        {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
-        {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
-        {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
-        {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
-        {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
-        {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
-        {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
-        {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
-        {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
+        // {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
+        // {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
+        // {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
+        // {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
+        // {id:1,article:'Vue入门教程',time:'2024/4/12',tag:'Vue'},
+        // {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
+        // {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
+        // {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
+        // {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
+        // {id:2,article:'Java入门教程',time:'2024/4/12',tag:'Java'},
       ]
     }
   },
@@ -68,9 +68,16 @@ export default {
     },
     //获取tags接口
     gettags() {
-      this.$http.get('/api/tags')
+      this.$http.get('/admin/tagSet')
           .then(response => {
-            this.tags = response.data
+            let len = response.data.data.data.length;
+            for (let i = 0; i < len; i++) {
+              this.tags.push({
+                index : i,
+                tagname : response.data.data.data[i].tagname,
+                tagnumbers : response.data.data.data[i].tagnum,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -78,9 +85,17 @@ export default {
     },
     //获取文章列表接口
     getarticle() {
-      this.$http.get('/api/article')
+      this.$http.get('/getblogList')
           .then(response => {
-            this.articles = response.data
+            let len = response.data.data.length;
+            for (let i = 0; i < len; i++) {
+              this.articles.push({
+                id : response.data.data[i].bid,
+                article : response.data.data[i].title,
+                time : response.data.data[i].time,
+                tag : response.data.data[i].tagname,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -88,8 +103,8 @@ export default {
     }
   },
   created(){
-    //this.gettags();
-    //this.getarticle();
+    this.gettags();
+    this.getarticle();
   }
 }
 </script>
