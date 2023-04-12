@@ -23,7 +23,7 @@
               <span class="font-articl">{{recommendarticle[0].tag}}</span>
               <h1 class="font-little-title fonthover" @click="toBlog2(recommendarticle[0].id)">{{ recommendarticle[0].article }}</h1>
               <p class="font-articl">{{recommendarticle[0].content}}</p>
-              <dive><span>发布于 {{ recommendarticle[0].time }}</span></dive>
+              <div><span>发布于 {{ recommendarticle[0].time }}</span></div>
             </div>
           </div>
           <div class="top-article2-item3">
@@ -32,7 +32,7 @@
               <span class="font-articl">{{ recommendarticle[1].tag }}</span>
               <h1 class="font-little-title fonthover" @click="toBlog2(recommendarticle[1].id)">{{ recommendarticle[1].article }}</h1>
               <p class="font-articl">{{ recommendarticle[1].content }}</p>
-              <dive><span>发布于 {{ recommendarticle[1].time }}</span></dive></div>
+              <div><span>发布于 {{ recommendarticle[1].time }}</span></div></div>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ export default {
   },
   data(){
     return{
-      loading:true,
+      loading:false,
       flag: true, // 将flag传递给子组件
       currentPage: 1,
       pageSize: 7,
