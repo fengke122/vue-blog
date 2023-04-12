@@ -112,7 +112,7 @@ export default {
   },
   data(){
     return{
-      loading:false,
+      loading:true,
       flag: true, // 将flag传递给子组件
       currentPage: 1,
       pageSize: 7,

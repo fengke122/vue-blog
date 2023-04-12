@@ -122,6 +122,7 @@
               <div class="mybloglist" v-for="(item,index) in paginatedItems"  :key="index" @click="toBlog(item.id)">
                 <h2>{{ item.title }}</h2>
                 <p>{{ item.id }}</p>
+                <el-button class="btn" @click="deletearticle(item.id)" @click.stop>删除</el-button>
               </div>
             </div>
             <el-pagination
@@ -148,7 +149,7 @@ export default {
       size: "",
       loading:true,
       currentPage: 1, //初始页为1
-      pageSize: 6,    //页面显示数量
+      pageSize: 5,    //页面显示数量
       items: [
         { id:1,title: '文章标题1', time: '2022-01-01' },
         { id:2,title: '文章标题2', time: '2022-01-02' },
@@ -237,6 +238,26 @@ export default {
       // html 取参 $route.query.id
       // script 取参 this.$route.query.id
     },
+    deletearticle(id){
+      let index = this.items.findIndex(item => item.id === id);
+      this.items.splice(index,1);
+      this.$http.get('/api/deletearticle',{params:{id}})
+          .then(response => {
+            if(response.code === 200) {
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              });
+            }
+            else {
+              this.$message.error('删除失败');
+            }
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+
+    },
     //获取用户文章列表接口
     getUserarticle(){
       this.$http.get('/api/articleslist')
@@ -255,8 +276,7 @@ export default {
   },
   created() {
     this.getUserInfo()
-    this.getUserarticle()
-    this.userList = this.items
+    //this.getUserarticle()
   },
 }
 </script>
@@ -572,7 +592,15 @@ a {
   box-shadow: 0 2px 25px rgb(0 0 0 / 14%);
 }
 
+.mybloglist p {
+  display: inline-block;
+}
 
+.btn {
+  position: absolute;
+  left: 650px;
+  bottom: 23px;
+}
 
 
 </style>
