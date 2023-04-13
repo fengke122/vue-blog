@@ -202,6 +202,8 @@ export default {
           .then(response => {
             this.rules.title = response.data.title
             this.rules.context = response.data.context
+            this.rules.tagname = response.data.tagname
+            this.rules.classname  = response.data.classname
             if(response.data.code === 200) {
               this.$message({
                 message: '提交成功',
