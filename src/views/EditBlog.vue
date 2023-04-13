@@ -198,12 +198,13 @@ export default {
       this.$refs[formName].resetFields();
     },
     getUserarticle(){
-      this.$http.get('/api/articleslist')
+      let bid = this.ruleForm.id
+      this.$http.get('/blog/'+bid)
           .then(response => {
-            this.rules.title = response.data.title
-            this.rules.context = response.data.context
-            this.rules.tagname = response.data.tagname
-            this.rules.classname  = response.data.classname
+            this.ruleForm.title = response.data.data.title
+            this.ruleForm.context = response.data.data.context
+            this.ruleForm.tagname = response.data.data.tagname
+            this.ruleForm.classname  = response.data.data.classname
             if(response.data.code === 200) {
               this.$message({
                 message: '提交成功',
@@ -221,11 +222,11 @@ export default {
             console.error(err) // 打印错误信息
           })
     },
-    created() {
-      //this.getUserarticle();
-    }
-  },
 
+  },
+  created() {
+    this.getUserarticle();
+  }
 }
 </script>
 <style scoped>
