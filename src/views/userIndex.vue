@@ -122,7 +122,8 @@
               <div class="mybloglist" v-for="(item,index) in paginatedItems"  :key="index" @click="toBlog(item.id)">
                 <h2>{{ item.title }}</h2>
                 <p>{{ item.id }}</p>
-                <el-button class="btn" @click="deletearticle(item.id)" @click.stop>删除</el-button>
+                <el-button class="edt-btn" type="primary" @click.stop @click="editarticle(item.id)">编辑</el-button>
+                <el-button class="btn" @click="deletearticle(item.id)" @click.stop type="danger">删除</el-button>
               </div>
             </div>
             <el-pagination
@@ -273,6 +274,9 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
+    },
+    editarticle(id) {
+      this.$router.push({name:'editblog',params: {id:id}})
     }
   },
   created() {
@@ -600,6 +604,12 @@ a {
 .btn {
   position: absolute;
   left: 650px;
+  bottom: 23px;
+}
+
+.edt-btn {
+  position: absolute;
+  left: 580px;
   bottom: 23px;
 }
 

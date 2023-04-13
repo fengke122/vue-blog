@@ -33,14 +33,14 @@
 
 
           <el-form-item label="内容" prop="context">
-              <mavon-editor
-                  v-model="ruleForm.context"
-                  :toolbars="ruleForm.toolbars"
-                  ref="md"
-                  @imgAdd="imgAdd"
-                  @imgDel="imgDel"
-                  @save="saveMavon"
-              ></mavon-editor>
+            <mavon-editor
+                v-model="ruleForm.context"
+                :toolbars="ruleForm.toolbars"
+                ref="md"
+                @imgAdd="imgAdd"
+                @imgDel="imgDel"
+                @save="saveMavon"
+            ></mavon-editor>
           </el-form-item>
 
           <el-form-item>
@@ -50,20 +50,22 @@
         </el-form>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 import search from "@/components/search.vue";
 export default {
-  name: "UserBlogEdit",
+  name: "EditBlog",
   components:{
     search
   },
   data() {
+
     return {
+
       ruleForm: {
         title: '',
+        id:this.$route.params.id,
         tagname: '',
         classname: '',
         context: '',
@@ -160,8 +162,8 @@ export default {
         }
       }).then((response) => {
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-          var url = response;
-          _this.$refs.md.$img2Url(pos,url)
+        var url = response;
+        _this.$refs.md.$img2Url(pos,url)
       })
     },
     imgDel(pos) {
@@ -172,9 +174,9 @@ export default {
         if (valid) {
 
           const _this = this
-          const { title, tagname,classname,context,hot,isalive,addtime } = this.ruleForm; // 获取需要提交的数据
-          const formData =  { title, tagname,classname,context,hot,isalive,addtime }; // 构造提交的数据对象
-          this.$http.post('/user/updateBlog', formData, {
+          const { title, tagname,classname,context,hot,isalive,addtime,id } = this.ruleForm; // 获取需要提交的数据
+          const formData =  { title, tagname,classname,context,hot,isalive,addtime ,id}; // 构造提交的数据对象
+          this.$http.post('/user/reviseBlog', formData, {
             headers: {
               "Authorization": localStorage.getItem("token")
             }
@@ -194,10 +196,35 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    getUserarticle(){
+      this.$http.get('/api/articleslist')
+          .then(response => {
+            this.rules.title = response.data.title
+            this.rules.context = response.data.context
+            if(response.data.code === 200) {
+              this.$message({
+                message: '提交成功',
+                type: 'success'
+              });
+            }
+            else {
+              this.$message({
+                message: '提交失败',
+                type: 'warning'
+              });
+            }
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
+    },
+    created() {
+      //this.getUserarticle();
     }
   },
-}
 
+}
 </script>
 <style scoped>
 .m-content {
@@ -206,7 +233,7 @@ export default {
 
 .contanier {
   height: 902px;
-  background: url("~@/assets/img/bg8.jpg");
+  background: url("~@/assets/img/bg9.jpg");
   background-size: cover;
 }
 .main {

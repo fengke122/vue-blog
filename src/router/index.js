@@ -12,6 +12,7 @@ import UserBlogEdit from "@/views/UserBlogEdit.vue";
 import BlogShow from "@/views/BlogShow.vue";
 import Blogtag from "@/views/Blogtag.vue";
 import search from "@/components/search.vue";
+import EditBlog from "@/views/EditBlog.vue";
 
 Vue.use(VueRouter)
 
@@ -74,6 +75,11 @@ const routes = [
     path: '/blogtag/:id',
     name: 'blogtag',
     component: Blogtag
+  },
+  {
+    path: '/editblog/:id',
+    name: 'editblog',
+    component: EditBlog
   },
 ]
 
