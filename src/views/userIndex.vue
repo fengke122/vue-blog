@@ -152,17 +152,17 @@ export default {
       currentPage: 1, //初始页为1
       pageSize: 5,    //页面显示数量
       items: [
-        { id:1,title: '文章标题1', time: '2022-01-01' },
-        { id:2,title: '文章标题2', time: '2022-01-02' },
-        { id:3,title: '文章标题2', time: '2022-01-02' },
-        { id:4,title: '文章标题2', time: '2022-01-02' },
-        { id:5,title: '文章标题2', time: '2022-01-02' },
-        { id:6,title: '文章标题2', time: '2022-01-02' },
-        { id:7,title: '文章标题2', time: '2022-01-02' },
-        { id:8,title: '文章标题2', time: '2022-01-02' },
-        { id:9,title: '文章标题2', time: '2022-01-02' },
-        { id:10,title: '文章标题2', time: '2022-01-02' },
-        { id:11,title: '文章标题2', time: '2022-01-02' },
+        // { id:1,title: '文章标题1', time: '2022-01-01' },
+        // { id:2,title: '文章标题2', time: '2022-01-02' },
+        // { id:3,title: '文章标题2', time: '2022-01-02' },
+        // { id:4,title: '文章标题2', time: '2022-01-02' },
+        // { id:5,title: '文章标题2', time: '2022-01-02' },
+        // { id:6,title: '文章标题2', time: '2022-01-02' },
+        // { id:7,title: '文章标题2', time: '2022-01-02' },
+        // { id:8,title: '文章标题2', time: '2022-01-02' },
+        // { id:9,title: '文章标题2', time: '2022-01-02' },
+        // { id:10,title: '文章标题2', time: '2022-01-02' },
+        // { id:11,title: '文章标题2', time: '2022-01-02' },
       ],
       userdetil:{
         username: "小明",
@@ -216,17 +216,17 @@ export default {
       return isJPG && isLt2M;
     },
     getUserInfo() {
-      this.$http.get('/api/users')
+      this.$http.get('/user/userDetail')
           .then(response => {
             this.loading = false;
-            this.userdetil.username = response.data.username
-            this.userdetil.phone = response.data.phone
-            this.userdetil.email = response.data.email
-            this.userdetil.code = response.data.code
-            this.userdetil.job = response.data.job
-            this.userdetil.exp = response.data.exp
-            this.userdetil.level = response.data.level
-            this.userdetil.avatarUrl = response.data.image
+            this.userdetil.username = response.data.data.username
+            this.userdetil.phone = response.data.data.phone
+            this.userdetil.email = response.data.data.email
+            this.userdetil.code = response.data.data.code
+            this.userdetil.job = response.data.data.job
+            this.userdetil.exp = response.data.data.exp
+            this.userdetil.level = response.data.data.level
+            this.userdetil.avatarUrl = response.data.data.image
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -242,9 +242,9 @@ export default {
     deletearticle(id){
       let index = this.items.findIndex(item => item.id === id);
       this.items.splice(index,1);
-      this.$http.get('/api/deletearticle',{params:{id}})
+      this.$http.get('/user/deleteBlog/'+id)
           .then(response => {
-            if(response.code === 200) {
+            if(response.data.code === 200) {
               this.$message({
                 message: '删除成功',
                 type: 'success'
@@ -262,11 +262,16 @@ export default {
     },
     //获取用户文章列表接口
     getUserarticle(){
-      this.$http.get('/api/articleslist')
+      this.$http.get('/user/getMyBlog')
           .then(response => {
-            console.log(this.items)
-            this.items = response.data
-            console.log(response.data)
+            let len = response.data.data.BlostListTotal;
+            for (let i = 0; i < len; i++) {
+              this.items.push({
+                id : response.data.data.BlogList[i].bid,
+                title : response.data.data.BlogList[i].title,
+                time : response.data.data.BlogList[i].time,
+              })
+            }
           })
           .catch(err => {
             console.error(err) // 打印错误信息
@@ -281,7 +286,7 @@ export default {
   },
   created() {
     this.getUserInfo()
-    //this.getUserarticle()
+    this.getUserarticle()
   },
 }
 </script>

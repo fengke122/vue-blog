@@ -70,7 +70,7 @@ export default {
       this.$http.get('/blog/'+bid)
           .then(response => {
             this.loading = false;
-            this.title = response.data.data.title;
+            this.title = response.data.data.title
             this.tagname = response.data.data.tagname
             this.classname = response.data.data.classname
             this.hot = response.data.data.hot
