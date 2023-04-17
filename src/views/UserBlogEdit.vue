@@ -160,7 +160,10 @@ export default {
         }
       }).then((response) => {
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-          var url = response;
+          var url = response.data;
+          console.log(response)
+        console.log(response.data)
+        console.log(response.data.data)
           _this.$refs.md.$img2Url(pos,url)
       })
     },
@@ -174,7 +177,7 @@ export default {
           const _this = this
           const { title, tagname,classname,context,hot,isalive,addtime } = this.ruleForm; // 获取需要提交的数据
           const formData =  { title, tagname,classname,context,hot,isalive,addtime }; // 构造提交的数据对象
-          this.$http.post('/user/updateBlog', formData, {
+          this.$http.post('/user/insertBlog', formData, {
             headers: {
               "Authorization": localStorage.getItem("token")
             }

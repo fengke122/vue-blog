@@ -131,7 +131,7 @@ export default {
               }
             }).then(response => {
               // 处理响应数据
-              if (response.code == 200) {
+              if (response.data.code === 200) {
                 alert('注册成功');
                 this.$router.push('/login')
               }

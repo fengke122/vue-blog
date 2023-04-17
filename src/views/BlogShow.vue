@@ -40,6 +40,7 @@
 </template>
 <script>
 import search from "@/components/search.vue";
+import axios from "axios";
 export default {
   name: "BlogShow",
   components: {
@@ -69,6 +70,19 @@ export default {
       let bid = this.id
       this.$http.get('/blog/'+bid)
           .then(response => {
+            this.$http.get(response.data.data.context).then(res => {
+              this.context = res.data
+
+            }).catch(err => {
+              console.error(err)
+            })
+            console.log(this.context)
+            // this.$http.get(response.data.data.context,{ emulateJSON:true}).then(res => {
+            //   context = res
+            //   console.log(res)
+            // }).catch(err => {
+            //   console.error(err)
+            // })
             this.loading = false;
             this.title = response.data.data.title
             this.tagname = response.data.data.tagname
@@ -76,7 +90,8 @@ export default {
             this.hot = response.data.data.hot
             this.addtime = response.data.data.addtime
             this.isalive = response.data.data.isalive
-            this.context = response.data.data.context
+            // this.context = response.data.data.context
+
           })
           .catch(err => {
             console.error(err) // 打印错误信息

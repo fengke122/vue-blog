@@ -98,7 +98,7 @@
               <div class="img-clip-wrap">
                 <el-upload
                     class="avatar-uploader photo"
-                    action="/api/upload"
+                    action="http://localhost:8081/api/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -200,8 +200,18 @@ export default {
     handleAvatarSuccess(response,res, file) {
       // 上传成功时将 uploadSuccess 标记为 true，启用按钮
       this.uploadSuccess = true
-      this.getUserInfo();
-      console.log(response, res, file)
+      this.userdetil.avatarUrl  = response
+      this.$http.get('/user/changeHeadImage',{params:{image:response}})
+          .then(response => {
+            if (response.data.code === 200) {
+              this.getUserInfo();
+            } else {
+              console.log("修改失败")
+            }
+          })
+          .catch(err => {
+            console.error(err) // 打印错误信息
+          })
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
