@@ -32,7 +32,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-user-solid"><router-link to="/userindex" class="router-span">个人中心</router-link></el-dropdown-item>
             <el-dropdown-item icon="el-icon-s-tools"><router-link to="/userdetil" class="router-span">账号设置</router-link></el-dropdown-item>
-            <el-dropdown-item icon="el-icon-close">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-close"><router-link to="/logout" class="router-span">退出登录</router-link></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown v-show="!flag">
